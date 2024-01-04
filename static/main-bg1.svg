@@ -1,0 +1,38 @@
+<svg 
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ width="724.5px" height="742.5px">
+<defs>
+<filter filterUnits="userSpaceOnUse" id="Filter_0" x="0.5px" y="0.5px" width="723px" height="741px"  >
+    <feOffset in="SourceAlpha" dx="0" dy="4" />
+    <feGaussianBlur result="blurOut" stdDeviation="2.828" />
+    <feFlood flood-color="rgb(0, 0, 0)" result="floodOut" />
+    <feComposite operator="atop" in="floodOut" in2="blurOut" />
+    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+    <feMerge>
+    <feMergeNode/>
+    <feMergeNode in="SourceGraphic"/>
+  </feMerge>
+</filter>
+<filter filterUnits="userSpaceOnUse" id="Filter_1" x="5.5px" y="5.5px" width="713px" height="729px"  >
+    <feOffset in="SourceAlpha" dx="0" dy="4" />
+    <feGaussianBlur result="blurOut" stdDeviation="2.828" />
+    <feFlood flood-color="rgb(0, 0, 0)" result="floodOut" />
+    <feComposite operator="atop" in="floodOut" in2="blurOut" />
+    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+    <feMerge>
+    <feMergeNode/>
+    <feMergeNode in="SourceGraphic"/>
+  </feMerge>
+</filter>
+
+</defs>
+<g filter="url(#Filter_0)">
+<path fill-rule="evenodd"  stroke-width="1px" stroke="rgb(196, 170, 124)" fill="rgb(255, 255, 255)"
+ d="M714.641,709.838 C703.949,709.838 695.281,718.506 695.281,729.197 C695.281,729.300 695.295,729.398 695.296,729.500 L27.500,729.500 C27.318,729.500 27.142,729.477 26.961,729.473 C26.971,729.213 26.1000,728.959 26.1000,728.697 C26.1000,718.006 18.332,709.338 7.641,709.338 C7.593,709.338 7.547,709.345 7.500,709.345 L7.500,23.500 C7.500,23.348 7.519,23.202 7.523,23.051 C7.562,23.051 7.601,23.057 7.641,23.057 C18.332,23.057 26.1000,14.389 26.1000,3.698 C26.1000,3.639 26.992,3.583 26.991,3.525 C27.162,3.521 27.328,3.500 27.500,3.500 L695.316,3.500 C695.308,3.733 695.281,3.962 695.281,4.198 C695.281,14.889 703.949,23.557 714.641,23.557 C714.931,23.557 715.213,23.526 715.500,23.513 L715.500,709.500 C715.500,709.628 715.483,709.753 715.481,709.881 C715.200,709.868 714.924,709.838 714.641,709.838 Z"/>
+</g>
+<g filter="url(#Filter_1)">
+<path fill-rule="evenodd"  stroke="rgb(183, 147, 78)" stroke-width="1px" stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0.51" opacity="0.49" fill="rgb(255, 255, 255)"
+ d="M19.937,9.1000 L703.500,9.1000 C706.814,9.1000 709.500,12.686 709.500,15.1000 L709.500,715.500 C709.500,718.814 706.814,721.500 703.500,721.500 L19.937,721.500 C16.624,721.500 13.937,718.814 13.937,715.500 L13.937,15.1000 C13.937,12.686 16.624,9.1000 19.937,9.1000 Z"/>
+</g>
+</svg>
