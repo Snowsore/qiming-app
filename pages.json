@@ -11,6 +11,38 @@
 			"style": {
 				"navigationBarTitleText": "详细解读套餐"
 			}
+		},
+		{
+			"path": "pages/fortune/fortune",
+			"style": {
+				"navigationBarTitleText": "智能算命系统",
+				"app-plus": {
+					"autoBackButton": false
+				}
+			}
+		},
+		{
+			"path": "pages/fortune/fortune-package",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path" : "pages/fortune/fortune-link",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/fortune/fortune-result",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {
