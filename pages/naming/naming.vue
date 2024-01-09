@@ -9,7 +9,7 @@
 						中文姓氏
 						<text>*</text>
 					</view>
-					<qm-input placeholder="如张、李" :width="120" :value.sync="lastName"></qm-input>
+					<qm-input placeholder="如张、李" :width="400" :value.sync="lastName"></qm-input>
 					<!-- <qm-radio :arr="['不限','男','女']" :value.sync="sex" labelClass="item"></qm-radio> -->
 				</view>
 				<view class="form-item">
@@ -31,10 +31,13 @@
 						辈分
 						<text style="visibility: hidden">*</text>
 					</view>
-					<qm-input placeholder="如“张小三”是小字辈" :width="320" :value.sync="seniority" />
+					<qm-input placeholder="如“张小三”是小字辈" :width="400" :value.sync="seniority" />
 				</view>
-				<image @click="submit" class="qiming-btn" src="../../static/qiming-btn.png" mode="widthFix" />
-
+				
+				<view class="submit-btn">
+					<image @click="submit" class="qiming-btn" src="../../static/qiming-btn.png" mode="widthFix" />
+				</view>
+				
 				<view class="hint">
 					<view>测试部分免费，获取报告或解锁全部内容时，需付费查看</view>
 					<view>
@@ -54,7 +57,7 @@
 			<view>微信公众号：XXXXXXXX，扫码关注了解更多详情</view>
 		</view>
 
-		<view class="btn-c" @click="submit">
+		<view class="btn-c" @click="submit" v-show="showBtn">
 			<view class="bottom-btn">立即取名</view>
 		</view>
 
@@ -83,10 +86,13 @@ export default {
 			birthdate: null,
 			knowsExactTime: false,
 
+			showBtn: false,
 			isShowCalendar: true
 		};
 	},
-	onLoad() {},
+	onLoad() {
+		this.init()
+	},
 	components: {
 		qmRadio,
 		qmCheckbox,
@@ -95,7 +101,25 @@ export default {
 		qmAd
 	},
 	methods: {
-		confirm() {},
+		init() {
+			const that = this;
+			window.onscroll = function() {
+				let scrollTop = 0
+				if (document.documentElement && document.documentElement.scrollTop){
+					scrollTop = document.documentElement.scrollTop
+				} else if (document.body){
+					scrollTop = document.body.scrollTop
+				}
+				if (scrollTop >= 10){
+					that.showBtn = true
+				} else {
+					that.showBtn = false
+				}
+			}
+		},
+		confirm() {
+			
+		},
 		async submit() {
 			let msg = '';
 			if (!this.lastName) {
@@ -148,7 +172,7 @@ export default {
 }
 
 .form {
-	padding: 0 20rpx;
+	padding: 0 16rpx;
 
 	.title {
 		width: 100%;
@@ -162,10 +186,10 @@ export default {
 		background-repeat: no-repeat;
 		background-size: contain;
 		height: 700rpx;
-		padding: 50rpx 40rpx 0 40rpx;
+		padding: 50rpx 30rpx 0 30rpx;
 
 		.form-item {
-			margin-top: 36rpx;
+			margin-top: 32rpx;
 			display: flex;
 			align-items: center;
 
@@ -181,9 +205,19 @@ export default {
 			}
 		}
 	}
-	.qiming-btn {
-		margin-top: 40rpx;
+	.submit-btn {
+		display: flex;
+		justify-content: center;
+		margin-right: 30rpx;
+		.qiming-btn {
+			margin-top: 40rpx;
+			// position: relative;
+			// right: 32rpx;
+			width: 580rpx;
+			animation: breath 1.8s ease-in-out infinite;
+		}
 	}
+	
 	.hint {
 		display: flex;
 		flex-direction: column;
@@ -238,7 +272,6 @@ export default {
 	position: fixed;
 	bottom: 0;
 	width: 730rpx;
-	animation: breath 1.8s ease-in-out infinite;
 
 	.bottom-btn {
 		display: flex;
@@ -257,13 +290,13 @@ export default {
 
 @keyframes breath {
 	0% {
-		transform: scale(1.1);
+		transform: scale(1);
 	}
 	50% {
-		transform: scale(0.95);
+		transform: scale(0.9);
 	}
 	100% {
-		transform: scale(1.1);
+		transform: scale(1);
 	}
 }
 </style>

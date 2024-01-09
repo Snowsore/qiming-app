@@ -1,10 +1,10 @@
 <template>
 	<view>
-		<view class="datepicker">
-			<view v-if="!showValue" class="choose" @click="handleClick">请选择出生日期</view>
-			<view v-else class="choose" @click="handleClick">{{showValue}}</view>
+		<view class="datepicker" @click="handleClick">
+			<view v-if="!showValue" class="choose placeholder" >请选择出生日期</view>
+			<view v-else class="choose" >{{showValue}}</view>
 			
-			<image src="../../static/calender.svg" class="logo"></image>
+			<image src="../../static/calender.png" class="logo"></image>
 		</view>
 		
 		<view class="pop">
@@ -55,13 +55,17 @@
 	border: 1px solid rgb(215, 51, 64);
 	border-radius: 10rpx;
 	padding: 0 20rpx;
-	width: 320rpx;
+	width: 400rpx;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	
 }
 .choose {
-	color: #808080;
+	color: #272727;
+}
+.placeholder {
+	color: #b8b8b8;
 }
 .logo {
 	width: 42rpx;

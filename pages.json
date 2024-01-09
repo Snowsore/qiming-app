@@ -3,7 +3,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "AI智能取名"
 			}
 		},
 		{
@@ -13,47 +13,14 @@
 			}
 		},
 		{
-			"path": "pages/fortune/fortune",
-			"style": {
-				"navigationBarTitleText": "智能算命系统",
-				"app-plus": {
-					"autoBackButton": false
-				}
-			}
-		},
-		{
-			"path": "pages/fortune/fortune-package",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/fortune/fortune-link",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/fortune/fortune-result",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
 			"path": "pages/naming/naming",
 			"style": {
-				"navigationBarTitleText": "AI智能取名",
-				"enablePullDownRefresh": false
+				"navigationBarTitleText": "详细解读套餐"
 			}
 		}
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
+		"navigationStyle": "custom",
 		"backgroundColor": "#F8F8F8"
 	},
 	"uniIdRouter": {}

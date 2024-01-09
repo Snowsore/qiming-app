@@ -122,7 +122,7 @@ export default {
 <style lang="scss" scoped>
 .body {
 	background-color: #eeeeee;
-	min-height: calc(100vh - 78rpx);
+	min-height: 100vh;
 }
 
 .banner {

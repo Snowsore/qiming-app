@@ -6,8 +6,8 @@
 			<view @click="handleSelect(item)" v-for="(item, index) in packages" :class="['package', selectedPackage && selectedPackage.id === item.id? 'selected' : 'unselected']">
 				<view>
 					<view class="price">
-						<view class="discount">特惠价：{{ item.discountedPrice }}</view>
-						<view class="regular">原价：{{ item.regularPrice }}</view>
+						<view class="discount">特惠价：{{ item.discountedPrice }}元</view>
+						<view class="regular">原价：{{ item.regularPrice }}元</view>
 					</view>
 					<view class="desc">
 						{{ item.name }}：{{ item.description }}
@@ -95,7 +95,7 @@
 <style lang="scss" scoped>
 .body {
 	background-color: #eeeeee;
-	min-height: calc(100vh - 78rpx);
+	min-height: 100vh;
 }
 	
 .banner {
@@ -115,7 +115,6 @@
 		align-items: center;
 		margin-top: 25rpx;
 		border-width: 1px;
-		border-color: rgb(210, 210, 210);
 		border-style: solid;
 		border-radius: 10rpx;
 		
@@ -155,9 +154,12 @@
 	background-image: -moz-linear-gradient( 90deg, rgb(252,234,172) 0%, rgb(254,245,210) 100%);
 	background-image: -webkit-linear-gradient( 90deg, rgb(252,234,172) 0%, rgb(254,245,210) 100%);
 	background-image: -ms-linear-gradient( 90deg, rgb(252,234,172) 0%, rgb(254,245,210) 100%);
+	
+	border-color: #e4c29f;
 }
 .unselected {
 	background-color: #ffffff;
+	border-color: rgb(210, 210, 210);
 }
 .divider {
 	width: 700rpx;

@@ -1650,7 +1650,7 @@
           name: this.lunar == 'solar' ? '公历' : '农历',
           date: '||' + strData.join('|'),
 		  knowsExactTime,
-		  showTime: knowsExactTime ? this.hours[this.value[3]].text : this.hours[0].text,
+		  showTime: knowsExactTime ? this.hours[this.value[3]].text : '未知时辰',
 		  solarDate,
         });
       },

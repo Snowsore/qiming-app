@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<input @input="handleInput" :style="`width: ${width}rpx`" :placeholder="placeholder" class="qm-input"/>
+		<input placeholder-class="placeholder" @input="handleInput" :style="`width: ${width}rpx`" :placeholder="placeholder" class="qm-input"/>
 	</view>
 </template>
 
@@ -28,5 +28,9 @@
 	  border-radius: 10rpx;
 	  height: 60rpx;
 	  padding: 0 20rpx;
+	  font-size: 30rpx;
+	}
+	.placeholder {
+		color: #b8b8b8;
 	}
 </style>
