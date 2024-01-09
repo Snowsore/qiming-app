@@ -27,7 +27,7 @@
 				<image src="../../static/wx.png"></image>
 				点此微信支付
 			</view>
-			<view class="pay-btn zfb" @click="() => payWith('Taobao', selectedPackage.discountedPrice)">
+			<view class="pay-btn zfb" @click="() => payWith('Alipay', selectedPackage.discountedPrice)">
 				<image src="../../static/zfb.png"></image>
 				点此支付宝支付
 			</view>
@@ -96,6 +96,12 @@ export default {
 		async payWith(method, amount) {
 			const { orderId } = this.options;
 
+			if (method === 'WeChat') {
+				return uni.navigateTo({
+					url: `/pages/fortune/fortune-link?orderId=${orderId}`
+				});
+			}
+
 			const data = {
 				orderId: Number(orderId),
 				method,
@@ -107,6 +113,8 @@ export default {
 				method: 'POST',
 				data
 			});
+
+			if (res.statusCode >= 300) return;
 
 			const json = res.data;
 
