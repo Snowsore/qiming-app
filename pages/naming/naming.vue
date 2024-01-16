@@ -135,6 +135,12 @@ export default {
 					title: msg,
 					icon: 'none'
 				});
+				if (scrollY > 262) {
+					window.scrollTo({
+						top: 0,
+						behavior: 'smooth',
+					})
+				}
 				return;
 			}
 			uni.showLoading({
