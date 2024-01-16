@@ -71,7 +71,8 @@ import qmCheckbox from '../../components/qm-checkbox/qm-checkbox.vue';
 import qmInput from '../../components/qm-input/qm-input.vue';
 import qmDatepicker from '@/components/qm-datepicker/qm-datepicker.vue';
 import qmAd from '../../components/qm-ad/qm-ad.vue';
-
+import dayjs from 'dayjs'
+	
 import { GenderType } from '../../constants.js';
 
 export default {
@@ -148,12 +149,22 @@ export default {
 					birthdate: this.birthdate.toISOString(),
 					knowsExactTime: this.knowsExactTime,
 					seniority: this.seniority || undefined
-				}
+				},
 			});
+			uni.setStorage({
+				key: 'naming_submit',
+				data: {
+					lastName: this.lastName,
+					gender: this.gender === 'Male' ? '男':'女',
+					birthdate: dayjs(this.birthdate).format('YYYY年MM月DD日 HH时mm分 (公历)'),
+					knowsExactTime: this.knowsExactTime,
+					seniority: this.seniority || undefined
+				}
+			})
 			uni.hideLoading();
 			console.log(result);
 			uni.navigateTo({
-				url: `/pages/package/package?orderId=${result.data.id}`
+				url: `/pages/naming/preview?orderId=${result.data.id}`
 			});
 		}
 	}

@@ -20,12 +20,12 @@
 
 <style lang="scss" scoped>
 .box {
-  background: #6e86f2;
+  background: #ffffff;
   width: 65px;
   height: 90px;
   position: fixed;
   text-align: left;
-  right: 24rpx;
+  right: 50rpx;
   top: 60%;
 }
 
