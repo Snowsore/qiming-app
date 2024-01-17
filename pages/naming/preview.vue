@@ -47,7 +47,7 @@
 		
 		<view class="info">
 			<view>关注二维码查看更多测字服务，以及查询支付订单</view>
-			<image src="../../static/qrcode.png" mode="widthFix"></image>
+			<image src="../../static/qrcode.jpg" mode="widthFix"></image>
 		</view>
 
 		

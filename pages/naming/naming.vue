@@ -53,8 +53,8 @@
 			<image src="../../static/intro2.png" mode="widthFix"></image>
 		</view>
 		<view class="info">
-			<image src="../../static/qrcode.png" mode="widthFix"></image>
-			<view>微信公众号：XXXXXXXX，扫码关注了解更多详情</view>
+			<image src="../../static/qrcode.jpg" mode="widthFix"></image>
+			<view>微信公众号：柠檬来测，扫码关注了解更多详情</view>
 		</view>
 
 		<view class="btn-c" @click="submit" v-show="showBtn">

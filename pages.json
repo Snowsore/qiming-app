@@ -23,6 +23,30 @@
 			"style": {
 				"navigationBarTitleText": "AI智能取名"
 			}
+		},
+		{
+			"path": "pages/fortune/fortune",
+			"style": {
+				"navigationBarTitleText": "AI智能算命"
+			}
+		},
+		{
+			"path": "pages/fortune/fortune-link",
+			"style": {
+				"navigationBarTitleText": "AI智能算命"
+			}
+		},
+		{
+			"path": "pages/fortune/fortune-package",
+			"style": {
+				"navigationBarTitleText": "详细解读套餐"
+			}
+		},
+		{
+			"path": "pages/fortune/fortune-result",
+			"style": {
+				"navigationBarTitleText": "AI智能算命"
+			}
 		}
 	],
 	"globalStyle": {
