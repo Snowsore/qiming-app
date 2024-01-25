@@ -47,6 +47,14 @@
 			"style": {
 				"navigationBarTitleText": "AI智能算命"
 			}
+		},
+		{
+			"path" : "pages/fortune/fonrtune-payment",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {
