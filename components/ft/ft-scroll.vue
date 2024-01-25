@@ -9,7 +9,7 @@
 
 <style>
 .ft-scroll {
-	width: 16.875rem;
+	height: 9.375rem;
 	background-image: url('../../static/ft-scroll.png');
 	background-size: cover;
 	background-repeat: no-repeat;

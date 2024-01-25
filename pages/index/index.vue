@@ -1,10 +1,7 @@
 <template>
-	<view>
-		<navigator url="/pages/fortune/fortune"><button type="default">算命</button></navigator>
-		<navigator url="/pages/naming/naming"><button type="default">取名</button></navigator>
-	</view>
+	<view class="content"></view>
 </template>
 
-<script></script>
+<script setup></script>
 
-<style lang="scss" scoped></style>
+<style></style>
