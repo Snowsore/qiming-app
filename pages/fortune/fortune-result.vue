@@ -1,35 +1,16 @@
 <template>
 	<view class="body">
-		<!-- <image class="full-width" mode="widthFix" src="../../static/result-page.png" /> -->
-		{{ fateData }}
+		<image class="full-width" mode="widthFix" src="../../static/result-page.png"></image>
 	</view>
 </template>
 
 <script>
 export default {
 	data() {
-		return {
-			fateData: ''
-		};
+		return {};
 	},
-	onLoad(option) {
-		this.updateData();
-	},
-	methods: {
-		async updateData() {
-			const { serviceId } = this.options;
-
-			const res = await uni.request({
-				url: `/service/fortune_service/${serviceId}`
-			});
-
-			if (res.statusCode >= 300) return;
-
-			const { data } = res;
-
-			this.fateData = data;
-		}
-	}
+	onLoad(option) {},
+	methods: {}
 };
 </script>
 

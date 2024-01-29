@@ -49,11 +49,10 @@
 			}
 		},
 		{
-			"path" : "pages/fortune/fonrtune-payment",
-			"style" : 
-			{
-				"navigationBarTitleText" : "",
-				"enablePullDownRefresh" : false
+			"path": "pages/fortune/fonrtune-payment",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
 			}
 		}
 	],

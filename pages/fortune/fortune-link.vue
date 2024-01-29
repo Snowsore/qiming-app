@@ -1,7 +1,7 @@
 <template>
 	<view class="body">
 		<image class="full-width" mode="widthFix" src="../../static/payment-successful.png"></image>
-		<image @click="redirect" class="full-width" mode="widthFix" src="../../static/view-report.png"></image>
+		<image class="full-width" mode="widthFix" src="../../static/view-report.png"></image>
 	</view>
 </template>
 
@@ -11,13 +11,7 @@ export default {
 		return {};
 	},
 	onLoad(option) {},
-	methods: {
-		redirect() {
-			uni.navigateTo({
-				url: `/pages/fortune/fortune-result?serviceId=1`
-			});
-		}
-	}
+	methods: {}
 };
 </script>
 
