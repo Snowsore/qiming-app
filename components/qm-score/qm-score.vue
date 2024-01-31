@@ -58,7 +58,7 @@
 	}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 	
 .wrapper {
 	width: 186rpx;
@@ -85,10 +85,11 @@
 .content {
 	display: flex;
 	justify-content: space-between;
-	.score {
-		font-size: 24rpx;
-		font-family: "PingFang";
-		color: rgb(55, 55, 55);
-	}
+}
+
+.score {
+	font-size: 24rpx;
+	font-family: "PingFang";
+	color: rgb(55, 55, 55);
 }
 </style>

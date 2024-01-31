@@ -40,6 +40,8 @@
 </template>
 
 <script>
+	import { helaPay } from '../../api/constant.js'
+	
 	export default {
 		data() {
 			return {
@@ -55,6 +57,10 @@
 				uni.showLoading({
 					mask: true
 				})
+				
+				const skus = await helaPay.requestAllSkuList()
+				console.log(skus)
+				
 				const result = await uni.request({
 					url: '/package_option/naming_service',
 					data: {

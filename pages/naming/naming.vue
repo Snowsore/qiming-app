@@ -62,6 +62,10 @@
 		</view>
 
 		<qm-ad></qm-ad>
+		
+		<view class="safe-area">
+			
+		</view>
 	</view>
 </template>
 
@@ -111,7 +115,7 @@ export default {
 				} else if (document.body){
 					scrollTop = document.body.scrollTop
 				}
-				if (scrollTop >= 10){
+				if (scrollTop >= 440){
 					that.showBtn = true
 				} else {
 					that.showBtn = false
@@ -125,6 +129,8 @@ export default {
 			let msg = '';
 			if (!this.lastName) {
 				msg = '请输入中文姓氏';
+			} else if (this.lastName.length > 2) {
+				msg = '请输入正确的中文姓氏';
 			} else if (!this.birthdate) {
 				msg = '请选择出生日期';
 			} else if (!this.agreeTerm) {
@@ -212,10 +218,10 @@ export default {
 
 			.label {
 				text-align: right;
-				width: 150rpx;
+				width: 154rpx;
 				flex-shrink: 0;
 				margin-right: 30rpx;
-
+				text-wrap: nowrap;
 				text {
 					color: #e32129;
 				}
@@ -287,7 +293,7 @@ export default {
 	padding: 12rpx;
 	background-color: #ea3f4a;
 	position: fixed;
-	bottom: 0;
+	bottom: 44rpx;
 	width: 730rpx;
 
 	.bottom-btn {
@@ -315,5 +321,13 @@ export default {
 	100% {
 		transform: scale(1);
 	}
+}
+
+.safe-area {
+	width: 750rpx;
+	height: 44rpx;
+	background-color: #fff;
+	position: fixed;
+	bottom: 0;
 }
 </style>

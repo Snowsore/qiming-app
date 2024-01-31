@@ -21,11 +21,11 @@
 <style lang="scss" scoped>
 .box {
   background: #ffffff;
-  width: 65px;
-  height: 90px;
+  width: 52px;
+  height: 72px;
   position: fixed;
   text-align: left;
-  right: 50rpx;
+  right: 26rpx;
   top: 60%;
 }
 
