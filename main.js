@@ -6,18 +6,24 @@ import './uni.promisify.adaptor'
 import { helaPay, PKG, TOKEN, APP_VERSION } from './api/constant.js'
 
 
-helaPay.init({
-  pkg: PKG,
-  tk: TOKEN,
-  version: APP_VERSION,
-  code: '' // 微信code授权码。其他环境暂时为 '' 就行
-})
-.then(res => {
-	console.log(res)
-})
-.catch(err => {
-	console.log(err)
-})
+try {
+  const ua = window.navigator.userAgent.toLowerCase()
+  window.$isWechat = ua.indexOf('micromessenger') !== -1
+  
+  helaPay
+    .init({
+      pkg: PKG,
+      tk: TOKEN,
+      version: APP_VERSION,
+      code: ''
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+		helaPay.requestUserInfo()
+    })
+} catch (err) {
+  console.log(err)
+}
 
 Vue.config.productionTip = false
 App.mpType = 'app'

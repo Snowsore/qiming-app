@@ -63,9 +63,7 @@
 
 		<qm-ad></qm-ad>
 		
-		<view class="safe-area">
-			
-		</view>
+		<view class="safe-area" v-show="isIPhone"></view>
 	</view>
 </template>
 
@@ -84,7 +82,7 @@ export default {
 		return {
 			GenderType,
 			agreeTerm: true,
-
+			isIPhone: true,
 			gender: 'Male',
 			lastName: '',
 			seniority: '',
@@ -97,6 +95,7 @@ export default {
 	},
 	onLoad() {
 		this.init()
+		this.isIPhone = /iPhone/.test(navigator.userAgent) && /Mobile\/[\S\s]+Safari\//.test(navigator.userAgent);
 	},
 	components: {
 		qmRadio,
@@ -184,6 +183,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+	
 .content {
 	background-color: #eeeeee;
 	min-height: 100vh;
