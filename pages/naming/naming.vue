@@ -33,11 +33,11 @@
 					</view>
 					<qm-input placeholder="如“张小三”是小字辈" :width="400" :value.sync="seniority" />
 				</view>
-				
+
 				<view class="submit-btn">
 					<image @click="submit" class="qiming-btn" src="../../static/qiming-btn.png" mode="widthFix" />
 				</view>
-				
+
 				<view class="hint">
 					<view>测试部分免费，获取报告或解锁全部内容时，需付费查看</view>
 					<view>
@@ -73,8 +73,8 @@ import qmCheckbox from '../../components/qm-checkbox/qm-checkbox.vue';
 import qmInput from '../../components/qm-input/qm-input.vue';
 import qmDatepicker from '@/components/qm-datepicker/qm-datepicker.vue';
 import qmAd from '../../components/qm-ad/qm-ad.vue';
-import dayjs from 'dayjs'
-	
+import dayjs from 'dayjs';
+
 import { GenderType } from '../../constants.js';
 
 export default {
@@ -107,23 +107,21 @@ export default {
 	methods: {
 		init() {
 			const that = this;
-			window.onscroll = function() {
-				let scrollTop = 0
-				if (document.documentElement && document.documentElement.scrollTop){
-					scrollTop = document.documentElement.scrollTop
-				} else if (document.body){
-					scrollTop = document.body.scrollTop
+			window.onscroll = function () {
+				let scrollTop = 0;
+				if (document.documentElement && document.documentElement.scrollTop) {
+					scrollTop = document.documentElement.scrollTop;
+				} else if (document.body) {
+					scrollTop = document.body.scrollTop;
 				}
 				if (scrollTop >= 440){
 					that.showBtn = true
 				} else {
-					that.showBtn = false
+					that.showBtn = false;
 				}
-			}
+			};
 		},
-		confirm() {
-			
-		},
+		confirm() {},
 		async submit() {
 			let msg = '';
 			if (!this.lastName) {
@@ -143,8 +141,8 @@ export default {
 				if (scrollY > 262) {
 					window.scrollTo({
 						top: 0,
-						behavior: 'smooth',
-					})
+						behavior: 'smooth'
+					});
 				}
 				return;
 			}
@@ -160,18 +158,18 @@ export default {
 					birthdate: this.birthdate.toISOString(),
 					knowsExactTime: this.knowsExactTime,
 					seniority: this.seniority || undefined
-				},
+				}
 			});
 			uni.setStorage({
 				key: 'naming_submit',
 				data: {
 					lastName: this.lastName,
-					gender: this.gender === 'Male' ? '男':'女',
+					gender: this.gender === 'Male' ? '男' : '女',
 					birthdate: dayjs(this.birthdate).format('YYYY年MM月DD日 HH时mm分 (公历)'),
 					knowsExactTime: this.knowsExactTime,
 					seniority: this.seniority || undefined
 				}
-			})
+			});
 			uni.hideLoading();
 			console.log(result);
 			uni.navigateTo({
@@ -240,7 +238,7 @@ export default {
 			animation: breath 1.8s ease-in-out infinite;
 		}
 	}
-	
+
 	.hint {
 		display: flex;
 		flex-direction: column;
