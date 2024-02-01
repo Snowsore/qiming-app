@@ -9,29 +9,28 @@
 						中文姓氏
 						<text>*</text>
 					</view>
-					<qm-input placeholder="如张、李" :width="400" :value.sync="lastName"></qm-input>
-					<!-- <qm-radio :arr="['不限','男','女']" :value.sync="sex" labelClass="item"></qm-radio> -->
+					<qm-input placeholder="如张、李" :width="400" v-model="lastName"></qm-input>
 				</view>
 				<view class="form-item">
 					<view class="label">
 						性别
 						<text>*</text>
 					</view>
-					<qm-radio :arr="GenderType" :value.sync="gender"></qm-radio>
+					<qm-radio :arr="GenderType" v-model="gender"></qm-radio>
 				</view>
 				<view class="form-item">
 					<view class="label">
 						出生时辰
 						<text>*</text>
 					</view>
-					<qm-datepicker :value.sync="birthdate" :knowsExactTime.sync="knowsExactTime"></qm-datepicker>
+					<qm-datepicker v-model:date="birthdate" v-model:knowsExactTime="knowsExactTime"></qm-datepicker>
 				</view>
 				<view class="form-item">
 					<view class="label">
 						辈分
 						<text style="visibility: hidden">*</text>
 					</view>
-					<qm-input placeholder="如“张小三”是小字辈" :width="400" :value.sync="seniority" />
+					<qm-input placeholder="如“张小三”是小字辈" :width="400" v-model="seniority" />
 				</view>
 
 				<view class="submit-btn">
@@ -41,7 +40,7 @@
 				<view class="hint">
 					<view>测试部分免费，获取报告或解锁全部内容时，需付费查看</view>
 					<view>
-						<qm-checkbox :checked.sync="agreeTerm"></qm-checkbox>
+						<qm-checkbox v-model="agreeTerm"></qm-checkbox>
 						同意个人隐私协议
 					</view>
 				</view>
@@ -160,7 +159,7 @@ export default {
 					seniority: this.seniority || undefined
 				}
 			});
-			uni.setStorage({
+			uni.setStorageSync({
 				key: 'naming_submit',
 				data: {
 					lastName: this.lastName,

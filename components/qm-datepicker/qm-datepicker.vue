@@ -28,7 +28,7 @@
 				userString: ''
 			};
 		},
-		props: ['value'],
+		props: ['date', 'knowsExactTime'],
 		components: {
 			qmCalendar,
 		},
@@ -41,7 +41,7 @@
 				console.log(e)
 				this.userString = e.date
 				this.$refs.popup.close()
-				this.$emit('update:value', e.solarDate)
+				this.$emit('update:date', e.solarDate)
 				this.$emit('update:knowsExactTime', e.knowsExactTime)
 			},
  		}

@@ -87,14 +87,12 @@ export default {
 			
 			data: undefined,
 			orderId: undefined,
-			namingSubmit: undefined
+			namingSubmit: {}
 		};
 	},
 	onLoad(options) {
 		this.orderId = options.orderId
 		this.fetchData(options.orderId)
-		
-		
 	},
 	components: {
 		qmRadio,

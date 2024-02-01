@@ -7,7 +7,8 @@
 <script>
 	export default {
 		name:"qm-input",
-		props: ['value', 'width', 'placeholder'],
+		props: ['modelValue', 'width', 'placeholder'],
+		emits: ['update:modelValue'],
 		data() {
 			return {
 				
@@ -16,7 +17,7 @@
 		methods: {
 			handleInput(e) {
 				console.log(e, e.detail.value)
-				this.$emit('update:value', e.detail.value)
+				this.$emit('update:modelValue', e.detail.value)
 			}
 		}
 	}
