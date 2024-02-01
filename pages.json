@@ -49,7 +49,7 @@
 			}
 		},
 		{
-			"path": "pages/fortune/fonrtune-payment",
+			"path": "pages/fortune/fortune-payment",
 			"style": {
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false

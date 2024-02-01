@@ -1,19 +1,22 @@
 <template>
 	<view class="ft-scroll">
-		good good good good good
 		<slot />
 	</view>
 </template>
 
-<script></script>
+<script setup></script>
 
 <style>
 .ft-scroll {
-	height: 9.375rem;
+	height: 300rpx;
 	background-image: url('../../static/ft-scroll.png');
 	background-size: cover;
 	background-repeat: no-repeat;
 
 	box-sizing: border-box;
+
+	padding: 55rpx 85rpx;
+
+	color: #3c2d24;
 }
 </style>

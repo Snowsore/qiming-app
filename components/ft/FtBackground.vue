@@ -4,17 +4,12 @@
 	</view>
 </template>
 
-<script>
-export default {
-	data() {
-		return {};
-	},
-	methods: {}
-};
-</script>
+<script></script>
 
 <style scoped>
 .ft-background {
+	padding-top: 100rpx;
+	box-sizing: border-box;
 	min-height: 100vh;
 	background-color: #ea3f4a;
 	background-image: url('../../static/ft-background.png');
