@@ -48,7 +48,7 @@
 	}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .datepicker {
 	font-size: 30rpx;
 	height: 60rpx;

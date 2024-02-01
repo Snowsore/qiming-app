@@ -27,7 +27,12 @@
 				
 				<image class="divider" mode="widthFix" src="../../static/divider.png"></image>
 				
-				<image @click="jumpPackage" src="../../static/name_coupon.png" mode="widthFix" class="coupon"></image>
+				<view>
+					<image @click="jumpPackage" src="../../static/name_coupon.png" class="coupon"></image>
+					<view class="countdown">
+						<uv-count-down :time="12 * 60 * 60 * 1000" format="HH：mm：ss" autoStart></uv-count-down>
+					</view>
+				</view>
 			</view>
 			
 			
@@ -173,6 +178,13 @@ export default {
 		
 		.coupon {
 			width: 680rpx;
+		}
+		.countdown {
+			position: relative;
+			// left: 470rpx;
+			text-align: right;
+			margin-right: 88rpx;
+			bottom: 250rpx;
 		}
 		.detail {
 			display: flex;
