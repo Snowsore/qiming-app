@@ -4,7 +4,8 @@
 			<view style="font-size: 30rpx; line-height: 48rpx">
 				<view>您的姓名：红辣椒</view>
 				<view>您的性别：男</view>
-				<view>出生日期：{{ Date() }}</view>
+				<view>出生日期：{{ calendar.solarString }}</view>
+				<view>{{ calendar.lunarString }}</view>
 			</view>
 		</FtScroll>
 		<view style="margin: 15rpx">
@@ -90,6 +91,10 @@ import WechatPublicQrcode from '../../components/ft/WechatPublicQrcode.vue';
 import FtCircleIcon from '../../components/ft/FtCircleIcon.vue';
 import FtFortuneCircle from '../../components/ft/FtFortuneCircle.vue';
 import FtFooter from '../../components/ft/FtFooter.vue';
+
+import calendarConverter from '../../utils/calendarConverter.js';
+
+const calendar = calendarConverter.create(new Date());
 </script>
 
 <style scoped></style>

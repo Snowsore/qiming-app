@@ -54,7 +54,7 @@ defineExpose({
 
 <style>
 .ft-payment-confirm-popup {
-	width: 650rpx;
+	width: 680rpx;
 	height: 400rpx;
 	background-color: white;
 	border-radius: 10rpx;
