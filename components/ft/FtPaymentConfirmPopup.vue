@@ -28,6 +28,10 @@ const open = () => {
 	dialog.value.open();
 };
 
+const close = () => {
+	dialog.value.close();
+};
+
 const handleClose = () => {
 	dialog.value.close();
 };
@@ -43,7 +47,8 @@ const handleComplete = () => {
 const emit = defineEmits(['continue', 'complete']);
 
 defineExpose({
-	open
+	open,
+	close
 });
 </script>
 
