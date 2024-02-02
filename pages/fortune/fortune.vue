@@ -6,7 +6,6 @@
 			<FtHomepageLabel type="birthdate" v-model="birthdate" />
 		</view>
 		<view class="ft-start-button" @click="handleSubmit" />
-		<view class="ft-homepage-master-qr" />
 	</view>
 </template>
 
@@ -28,7 +27,7 @@ const handleSubmit = () => {
 <style scoped>
 .ft-homepage {
 	width: 750rpx;
-	height: 4659rpx;
+	height: 4935rpx;
 	background-image: url('../../static/ft-homepage.png');
 	background-repeat: no-repeat;
 	background-size: contain;
@@ -62,16 +61,5 @@ const handleSubmit = () => {
 	to {
 		transform: translateX(-50%) scale(0.95);
 	}
-}
-
-.ft-homepage-master-qr {
-	position: absolute;
-	top: 3790rpx;
-	left: 140rpx;
-	width: 500rpx;
-	height: 500rpx;
-	background-image: url('../../static/wechat-public-qrcode.jpg');
-	background-repeat: no-repeat;
-	background-size: contain;
 }
 </style>

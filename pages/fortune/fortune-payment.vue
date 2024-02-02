@@ -58,6 +58,7 @@ const handleContinue = () => {
 };
 
 const handleComplete = () => {
+	confirmPopup.value.close();
 	uni.navigateTo({
 		url: `/pages/fortune/fortune-result`
 	});
