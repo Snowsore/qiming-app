@@ -25,9 +25,9 @@
 			<view class="pay-btn wx" @click="handleWXPay">
 				<image src="../../static/wx.png"></image>点此微信支付
 			</view>
-			<view class="pay-btn zfb">
+			<!-- <view class="pay-btn zfb">
 				<image src="../../static/zfb.png"></image>点此支付宝支付
-			</view>
+			</view> -->
 		</view>
 		
 		<view class="notice">
@@ -40,8 +40,9 @@
 </template>
 
 <script>
-import { helaPay } from '../../api/constant.js'
 import { SkuList } from '../../constants.js';
+import { mobileWxPay } from '../../pay.js';
+import { helaPay } from '../../api/constant.js'
 	
 	export default {
 		data() {
@@ -60,15 +61,9 @@ import { SkuList } from '../../constants.js';
 					mask: true
 				})
 				
-				const skus = await helaPay.requestAllSkuList()
-				console.log(skus)
-				
-				// const result = await uni.request({
-				// 	url: '/package_option/naming_service',
-				// 	data: {
-				// 		orderId
-				// 	}
-				// })
+				// const skus = await helaPay.requestAllSkuList()
+				// console.log(skus)
+			
 				
 				const paidResult = await uni.request({
 					url: `/order/${orderId}/package_options`,
@@ -76,30 +71,10 @@ import { SkuList } from '../../constants.js';
 				})
 				
 				uni.hideLoading()
-				// this.packages=[{
-				// 	id: 1,
-				// 	discountedPrice: '11',
-				// 	regularPrice: '22',
-				// 	name: '33',
-				// 	description: '55'
-				// },{
-				// 	id: 2,
-				// 	discountedPrice: '11',
-				// 	regularPrice: '22',
-				// 	name: '套餐2',
-				// 	description: '55'
-				// }]
-				// this.selectedPackage = {
-				// 	id: 1,
-				// 	discountedPrice: '11',
-				// 	regularPrice: '22',
-				// 	name: '33',
-				// 	description: '55'
-				// }
+
 				const packages = paidResult.data.options.map(item => {
 					return {
 						...item,
-						// isPaid: paidResult.data.options.find(option => option.id === item.id),
 						lastPrice: Number(item.discountedPrice) - Number(paidResult.data.paidAmount)
 					}
 				})
@@ -120,25 +95,12 @@ import { SkuList } from '../../constants.js';
 				if (sku) {
 					// PC端扫码支付
 					// const payScan = await helaPay.requestPayScan(skuId)
+					// 开始轮训结果？
 					
-					helaPay
-					  .requestWakeWeChatPay(sku.id, window.$isWechat)
-					  .then((payScanInfo) => {
-						  if (payScanInfo) {
-							  const rUrl = encodeURIComponent(
-							    appendUrlParams(window.location.href, { [kPayId]: payScanInfo.payOrderId })
-							  )
-							  if (window.$isWechat) {
-							    helaPay.wxJSPay(payScanInfo, () => {
-							      window.location.href = window.decodeURIComponent(rUrl)
-							    })
-							  } else {
-							    window.location.href = `${payScanInfo.orderStr}&redirect_url=${rUrl}`
-							  }
-						  } else {
-							  // 未获取到订单信息
-						  }
-					  })
+					// 拉起支付
+					mobileWxPay(sku.id)
+					
+					
 				}
 			},
 		},
@@ -207,6 +169,10 @@ import { SkuList } from '../../constants.js';
 	background-image: -moz-linear-gradient( 90deg, rgb(252,234,172) 0%, rgb(254,245,210) 100%);
 	background-image: -webkit-linear-gradient( 90deg, rgb(252,234,172) 0%, rgb(254,245,210) 100%);
 	background-image: -ms-linear-gradient( 90deg, rgb(252,234,172) 0%, rgb(254,245,210) 100%);
+	background-color: rgb(254,245,210);
+	// background:-moz-linear-gradient( 90deg, rgb(252,234,172) 0%, rgb(254,245,210) 100%);/*Mozilla*/
+	// background:-webkit-linear-gradient(90deg, rgb(252,234,172) 0%, rgb(254,245,210) 100%);/*new gradient for Webkit*/
+	// background:-o-linear-gradient( 90deg, rgb(252,234,172) 0%, rgb(254,245,210) 100%);/*Opera11*/
 	
 	border-color: #e4c29f;
 }

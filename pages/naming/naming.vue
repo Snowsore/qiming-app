@@ -159,15 +159,12 @@ export default {
 					seniority: this.seniority || undefined
 				}
 			});
-			uni.setStorageSync({
-				key: 'naming_submit',
-				data: {
-					lastName: this.lastName,
-					gender: this.gender === 'Male' ? '男' : '女',
-					birthdate: dayjs(this.birthdate).format('YYYY年MM月DD日 HH时mm分 (公历)'),
-					knowsExactTime: this.knowsExactTime,
-					seniority: this.seniority || undefined
-				}
+			uni.setStorageSync('naming_submit', {
+				lastName: this.lastName,
+				gender: this.gender === 'Male' ? '男' : '女',
+				birthdate: dayjs(this.birthdate).format('YYYY年MM月DD日 HH时mm分 (公历)'),
+				knowsExactTime: this.knowsExactTime,
+				seniority: this.seniority || undefined
 			});
 			uni.hideLoading();
 			console.log(result);
@@ -219,6 +216,7 @@ export default {
 				flex-shrink: 0;
 				margin-right: 30rpx;
 				text-wrap: nowrap;
+				white-space: nowrap;
 				text {
 					color: #e32129;
 				}

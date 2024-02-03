@@ -66,7 +66,7 @@
 }	
 .bar {
 	width: 186rpx;
-	heigh: 14rpx;
+	height: 14rpx;
 	background-color: #d7d7d7;
 	border-radius: 14rpx;
 	overflow: hidden;
