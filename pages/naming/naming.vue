@@ -3,7 +3,6 @@
 		<image class="banner" src="/static/banner.png" mode="widthFix"></image>
 		<view class="form">
 			<image class="title" src="/static/main-title.png" mode="widthFix"></image>
-			<qm-datepicker v-model:date="birthdate" v-model:knowsExactTime="knowsExactTime"></qm-datepicker>
 			<view class="form-input">
 				<view class="form-item">
 					<view class="label">
