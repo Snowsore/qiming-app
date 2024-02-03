@@ -46,6 +46,8 @@ const emit = defineEmits(['update:modelValue']);
 
 	background-color: #fbce86;
 
+	font-size: 24rpx;
+
 	padding: 0 35rpx;
 	box-sizing: border-box;
 }
