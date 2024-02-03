@@ -3,6 +3,7 @@
 		<image class="banner" src="/static/banner.png" mode="widthFix"></image>
 		<view class="form">
 			<image class="title" src="/static/main-title.png" mode="widthFix"></image>
+			<qm-datepicker v-model:date="birthdate" v-model:knowsExactTime="knowsExactTime"></qm-datepicker>
 			<view class="form-input">
 				<view class="form-item">
 					<view class="label">
@@ -61,7 +62,7 @@
 		</view>
 
 		<qm-ad></qm-ad>
-		
+
 		<view class="safe-area" v-show="isIPhone"></view>
 	</view>
 </template>
@@ -93,7 +94,7 @@ export default {
 		};
 	},
 	onLoad() {
-		this.init()
+		this.init();
 		this.isIPhone = /iPhone/.test(navigator.userAgent) && /Mobile\/[\S\s]+Safari\//.test(navigator.userAgent);
 	},
 	components: {
@@ -113,8 +114,8 @@ export default {
 				} else if (document.body) {
 					scrollTop = document.body.scrollTop;
 				}
-				if (scrollTop >= 440){
-					that.showBtn = true
+				if (scrollTop >= 440) {
+					that.showBtn = true;
 				} else {
 					that.showBtn = false;
 				}
@@ -177,7 +178,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	
 .content {
 	background-color: #eeeeee;
 	min-height: 100vh;
