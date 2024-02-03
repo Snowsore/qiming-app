@@ -1,5 +1,6 @@
 <template>
 	<view class="ft-homepage">
+		<qm-datepicker></qm-datepicker>
 		<view class="ft-homepage-label-input-form">
 			<FtHomepageLabel type="name" v-model="name" />
 			<FtHomepageLabel type="gender" v-model="gender" />
@@ -34,10 +35,7 @@ const handleSubmit = () => {
 }
 
 .ft-homepage-label-input-form {
-	position: absolute;
-	top: 710rpx;
-	left: 50%;
-	transform: translateX(-50%);
+	margin: 640rpx 40rpx;
 	display: grid;
 	gap: 45rpx;
 }
