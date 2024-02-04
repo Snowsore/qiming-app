@@ -4,7 +4,7 @@ import { helaPay } from './api/constant.js'
 
 const mobileWxPay = (skuId, returnUrl) => {
 	helaPay
-	  .requestWakeWeChatPay(id, window.$isWechat)
+	  .requestWakeWeChatPay(skuId, window.$isWechat)
 	  .then((payScanInfo) => {
 		  if (payScanInfo) {
 			  const rUrl = returnUrl || encodeURIComponent(
@@ -22,7 +22,5 @@ const mobileWxPay = (skuId, returnUrl) => {
 		  }
 	  })
 }
-
-
 
 export { mobileWxPay }

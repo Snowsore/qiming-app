@@ -100,7 +100,6 @@ import { helaPay } from '../../api/constant.js'
 					// 拉起支付
 					mobileWxPay(sku.id)
 					
-					
 				}
 			},
 		},
