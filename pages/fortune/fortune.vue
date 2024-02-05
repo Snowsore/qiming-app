@@ -12,7 +12,11 @@
 <script setup>
 import { ref } from 'vue';
 import FtHomepageLabel from '../../components/ft/FtHomepageLabel.vue';
+<<<<<<< HEAD
 import qingnangAPI from '../../utils/qingnangAPI.js';
+=======
+import { apiFortune } from '../../api/qingnang.js';
+>>>>>>> 80f0f7a (Add helapay)
 
 const fullName = ref('');
 const gender = ref('Male');
@@ -21,13 +25,18 @@ const knowsExactTime = ref('');
 
 const handleSubmit = async () => {
 	try {
+<<<<<<< HEAD
 		const res = await qingnangAPI.createFortuneOrder({
+=======
+		const res = await apiFortune.createOrder({
+>>>>>>> 80f0f7a (Add helapay)
 			fullName: fullName.value,
 			gender: gender.value,
 			birthdate: birthdate.value,
 			knowsExactTime: false
 		});
 
+<<<<<<< HEAD
 		const { orderId } = res;
 
 		uni.navigateTo({
@@ -35,6 +44,14 @@ const handleSubmit = async () => {
 		});
 	} catch (err) {
 		alert('订单错误');
+=======
+		const { id } = res;
+
+		uni.navigateTo({
+			url: `/pages/fortune/fortune-payment?orderId=${id}`
+		});
+	} catch (err) {
+>>>>>>> 80f0f7a (Add helapay)
 		console.log(err);
 	}
 };
