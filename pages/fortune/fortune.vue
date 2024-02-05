@@ -1,8 +1,7 @@
 <template>
 	<view class="ft-homepage">
-		<qm-datepicker></qm-datepicker>
 		<view class="ft-homepage-label-input-form">
-			<FtHomepageLabel type="name" v-model="name" />
+			<FtHomepageLabel type="name" v-model="fullName" />
 			<FtHomepageLabel type="gender" v-model="gender" />
 			<FtHomepageLabel type="birthdate" v-model="birthdate" />
 		</view>
@@ -13,15 +12,30 @@
 <script setup>
 import { ref } from 'vue';
 import FtHomepageLabel from '../../components/ft/FtHomepageLabel.vue';
+import { apiFortune } from '../../api/qingnang.js';
 
-const name = ref('');
-const gender = ref('男');
+const fullName = ref('');
+const gender = ref('Male');
 const birthdate = ref('');
+const knowsExactTime = ref('');
 
-const handleSubmit = () => {
-	uni.navigateTo({
-		url: `/pages/fortune/fortune-payment`
-	});
+const handleSubmit = async () => {
+	try {
+		const res = await apiFortune.createOrder({
+			fullName: fullName.value,
+			gender: gender.value,
+			birthdate: birthdate.value,
+			knowsExactTime: false
+		});
+
+		const { id } = res;
+
+		uni.navigateTo({
+			url: `/pages/fortune/fortune-payment?orderId=${id}`
+		});
+	} catch (err) {
+		console.log(err);
+	}
 };
 </script>
 
@@ -35,7 +49,9 @@ const handleSubmit = () => {
 }
 
 .ft-homepage-label-input-form {
-	margin: 640rpx 40rpx;
+	position: absolute;
+	top: 700rpx;
+	left: 40rpx;
 	display: grid;
 	gap: 45rpx;
 }
