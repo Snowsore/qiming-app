@@ -12,7 +12,7 @@
 <script setup>
 import { ref } from 'vue';
 import FtHomepageLabel from '../../components/ft/FtHomepageLabel.vue';
-import { apiFortune } from '../../api/qingnang.js';
+import qingnangAPI from '../../utils/qingnangAPI.js';
 
 const fullName = ref('');
 const gender = ref('Male');
@@ -21,19 +21,20 @@ const knowsExactTime = ref('');
 
 const handleSubmit = async () => {
 	try {
-		const res = await apiFortune.createOrder({
+		const res = await qingnangAPI.createFortuneOrder({
 			fullName: fullName.value,
 			gender: gender.value,
 			birthdate: birthdate.value,
 			knowsExactTime: false
 		});
 
-		const { id } = res;
+		const { orderId } = res;
 
 		uni.navigateTo({
-			url: `/pages/fortune/fortune-payment?orderId=${id}`
+			url: `/pages/fortune/fortune-payment?orderId=${orderId}`
 		});
 	} catch (err) {
+		alert('订单错误');
 		console.log(err);
 	}
 };

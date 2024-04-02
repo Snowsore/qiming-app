@@ -32,7 +32,7 @@
 			<FtPaymentSelect v-model="method" />
 			<FtButton @click="handlePay">立即解锁内容</FtButton>
 		</FtPaymentSub>
-		<FtPaymentConfirmPopup ref="confirmPopup" @continue="handleContinue" @complete="handleComplete" />
+		<FtPaymentConfirmPopup ref="confirmPopup" @continue="jumpToPaymentPage" @complete="checkPackageState" />
 	</FtBackground>
 </template>
 
@@ -49,8 +49,7 @@ import FtTimer from '../../components/ft/FtTimer.vue';
 import FtButton from '../../components/ft/FtButton.vue';
 import FtPaymentConfirmPopup from '../../components/ft/FtPaymentConfirmPopup.vue';
 
-import { mobileWxPay } from '../../pay.js';
-import { apiFortune, apiPayment } from '../../api/qingnang.js';
+import qingnangAPI from '../../utils/qingnangAPI.js';
 import calendarConverter from '../../utils/calendarConverter.js';
 
 const props = defineProps(['orderId']);
@@ -62,53 +61,68 @@ const bazi = ref('');
 
 const method = ref('wechat');
 
-const paymentInfo = ref('');
-const paymentChecking = ref(false);
-
-const updateData = async () => {
-	const res = await apiFortune.getOrder(props.orderId);
-	const { FortuneService: fs } = res;
-	fullName.value = fs.fullName;
-	gender.value = fs.gender == 'Male' ? '男' : '女';
-	birthdate.value = fs.birthdate;
-	bazi.value = fs.data.info1.bazi;
-};
+const paymentUrl = ref('');
 
 const formatBirthdate = computed(() => {
 	const calendar = calendarConverter.create(new Date(birthdate.value));
 	return calendar.solarString;
 });
 
-watchEffect(() => {
-	updateData();
-});
+const updateData = async () => {
+	const { data, info } = await qingnangAPI.getFortuneService({ orderId: props.orderId });
 
-const handleContinue = async () => {
-	await apiPayment.request(paymentInfo.value);
+	fullName.value = info.fullName;
+	gender.value = info.gender == 'Male' ? '男' : '女';
+	birthdate.value = info.birthdate;
+	bazi.value = data.info1.bazi;
 };
 
-const handleComplete = async () => {
-	if (paymentChecking.value) return;
-	paymentChecking.value = true;
+const createPaymentUrl = async () => {
+	const packageOption = await qingnangAPI.getPackageOptions({
+		orderId: props.orderId
+	});
 
-	const res = await apiPayment.check(paymentInfo.value);
-	if (res.result.status == 1) {
-		confirmPopup.value.close();
+	const upgradePackageOption = packageOption.includedIn[0];
 
-		uni.navigateTo({
-			url: `/pages/fortune/fortune-result`
-		});
+	const payment = await qingnangAPI.createPayment({
+		orderId: props.orderId,
+		packageId: upgradePackageOption.packageId,
+		method: 'WeChat'
+	});
+
+	paymentUrl.value = payment.h5_url;
+};
+
+const checkPackageState = async () => {
+	if (await qingnangAPI.isPaidedPackage({ orderId: props.orderId })) {
+		jumpToResultPage();
 	}
+};
 
-	paymentChecking.value = false;
+const jumpToPaymentPage = () => {
+	window.location.href = paymentUrl.value;
 };
 
 const handlePay = async () => {
-	paymentInfo.value = await apiPayment.create('1749983144897007618');
-	await apiPayment.request(paymentInfo.value);
-
 	confirmPopup.value.open();
+
+	if (paymentUrl.value) jumpToPaymentPage();
 };
+
+const jumpToResultPage = () => {
+	uni.navigateTo({
+		url: `/pages/fortune/fortune-result?orderId=${props.orderId}`
+	});
+};
+
+watchEffect(async () => {
+	if (await qingnangAPI.isPaidedPackage({ orderId: props.orderId })) {
+		return jumpToResultPage();
+	}
+
+	await updateData();
+	await createPaymentUrl();
+});
 </script>
 
 <style></style>

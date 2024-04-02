@@ -2,7 +2,7 @@
 	<FtBackground>
 		<FtScroll>
 			<view style="font-size: 30rpx; line-height: 48rpx">
-				<view>您的姓名：红辣椒</view>
+				<view>您的姓名：{{ info.fullName }}</view>
 				<view>您的性别：男</view>
 				<view>出生日期：{{ calendar.solarString }}</view>
 				<view>{{ calendar.lunarString }}</view>
@@ -73,6 +73,36 @@
 			计三十个纳音五行。这些纳音都是五行的变体，每个纳音五行都有 自己独特的强弱和属性。
 		</FtInfoText>
 
+		<FtInfoCard title="info1">
+			<view style="font-size: 22rpx; line-height: 36rpx">
+				{{ data.info1 }}
+			</view>
+		</FtInfoCard>
+
+		<FtInfoCard title="info2">
+			<view style="font-size: 22rpx; line-height: 36rpx">
+				{{ data.info2 }}
+			</view>
+		</FtInfoCard>
+
+		<FtInfoCard title="info3">
+			<view style="font-size: 22rpx; line-height: 36rpx">
+				{{ data.info3 }}
+			</view>
+		</FtInfoCard>
+
+		<FtInfoCard title="info4">
+			<view style="font-size: 22rpx; line-height: 36rpx">
+				{{ data.info4 }}
+			</view>
+		</FtInfoCard>
+
+		<FtInfoCard title="info5">
+			<view style="font-size: 22rpx; line-height: 36rpx">
+				{{ data.info5 }}
+			</view>
+		</FtInfoCard>
+
 		<FtInfoText title="读取报告须知：">
 			为了给您提供高效、有针对性的服务，请注意以下问题: 1.对报告内容不明白或想深入了解，请在当前页面顶部/底部添加 老师微信; 2.如有订单问题，请及时联系客服
 		</FtInfoText>
@@ -82,6 +112,8 @@
 </template>
 
 <script setup>
+import { ref, watchEffect, computed, reactive } from 'vue';
+
 import FtBackground from '../../components/ft/FtBackground.vue';
 import FtScroll from '../../components/ft/FtScroll.vue';
 import FtLabelCard from '../../components/ft/FtLabelCard.vue';
@@ -92,9 +124,45 @@ import FtCircleIcon from '../../components/ft/FtCircleIcon.vue';
 import FtFortuneCircle from '../../components/ft/FtFortuneCircle.vue';
 import FtFooter from '../../components/ft/FtFooter.vue';
 
+import qingnangAPI from '../../utils/qingnangAPI.js';
 import calendarConverter from '../../utils/calendarConverter.js';
 
 const calendar = calendarConverter.create(new Date());
+
+const props = defineProps(['orderId']);
+
+const info = reactive({
+	fullName: '',
+	gender: 'Male',
+	birthdate: ''
+});
+
+const data = reactive({
+	info1: '',
+	info2: '',
+	info3: '',
+	info4: '',
+	info5: '',
+	info6: '',
+	info7: '',
+	info8: '',
+	info9: '',
+	info10: '',
+	info11: '',
+	info12: ''
+});
+
+watchEffect(async () => {
+	if (!(await qingnangAPI.isPaidedPackage({ orderId: props.orderId }))) {
+		return uni.navigateTo({
+			url: `/pages/fortune/fortune-payment?orderId=${props.orderId}`
+		});
+	}
+
+	const service = await qingnangAPI.getFortuneService({ orderId: props.orderId });
+	Object.assign(info, service.info);
+	Object.assign(data, service.data);
+});
 </script>
 
 <style scoped></style>
