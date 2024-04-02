@@ -75,6 +75,7 @@ const isPaidedPackage = async ({ orderId }) => {
 	return !packageOption.function.endsWith('0');
 };
 
+<<<<<<< HEAD
 const linkUser = async (data) => {
 	const res = await request({
 		url: `/api/user/link`,
@@ -84,6 +85,8 @@ const linkUser = async (data) => {
 	return res.data;
 };
 
+=======
+>>>>>>> 51f9038 (Drop helapay add qingnangAPI)
 export default {
 	createFortuneOrder,
 	getOrder,
@@ -92,6 +95,10 @@ export default {
 	createPayment,
 	getPackageOptions,
 	checkOrderPayment,
+<<<<<<< HEAD
 	isPaidedPackage,
 	linkUser
+=======
+	isPaidedPackage
+>>>>>>> 51f9038 (Drop helapay add qingnangAPI)
 };

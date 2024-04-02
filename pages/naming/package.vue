@@ -3,7 +3,11 @@
 		<image class="banner" mode="widthFix" src="../../static/banner2.png"></image>
 
 		<view class="packages">
+<<<<<<< HEAD
 			<view @click="handleSelect(item)" v-for="(item, index) in packages" :class="['package', selectedPackage && selectedPackage.packageId === item.packageId? 'selected' : 'unselected']">
+=======
+			<view @click="handleSelect(item)" v-for="(item, index) in packages" :class="['package', selectedPackage && selectedPackage.id === item.id ? 'selected' : 'unselected']">
+>>>>>>> 51f9038 (Drop helapay add qingnangAPI)
 				<view>
 					<view class="price">
 						<view class="discount">特惠价：{{ item.discountedPrice }}元</view>
@@ -37,21 +41,29 @@
 			<image mode="widthFix" src="../../static/notice.png"></image>
 			<view>支付系统经过安全联盟和可信网站认证，请放心使用</view>
 		</view>
+<<<<<<< HEAD
 		
 		<FtPaymentConfirmPopup ref="confirmPopup" @continue="jumpToPaymentPage" @complete="checkPayState" />
+=======
+>>>>>>> 51f9038 (Drop helapay add qingnangAPI)
 	</view>
 </template>
 
 <script>
 import { SkuList } from '../../constants.js';
 import { mobileWxPay } from '../../pay.js';
+<<<<<<< HEAD
 import { helaPay } from '../../hela_api/constant.js'
 import FtPaymentConfirmPopup from '../../components/ft/FtPaymentConfirmPopup.vue';
 import qingnangAPI from '../../utils/qingnangAPI.js';
+=======
+import { helaPay } from '../../api.bak/constant.js';
+>>>>>>> 51f9038 (Drop helapay add qingnangAPI)
 
 export default {
 	data() {
 		return {
+<<<<<<< HEAD
 			orderId: null,
 			paidAmount: 0,
 			packages: [],
@@ -74,11 +86,21 @@ export default {
 		if (isPaying && isPaying === this.orderId) {
 			this.$refs.confirmPopup.open()
 		}
+=======
+			paidAmount: 0,
+			packages: [],
+			selectedPackage: null
+		};
+	},
+	onLoad(option) {
+		this.fetchPackages(option.orderId);
+>>>>>>> 51f9038 (Drop helapay add qingnangAPI)
 	},
 	methods: {
 		async fetchPackages(orderId) {
 			uni.showLoading({
 				mask: true
+<<<<<<< HEAD
 			})
 			
 			const paidResult = await qingnangAPI.getPackageOptions({
@@ -140,6 +162,50 @@ export default {
 		},
 	},
 }
+=======
+			});
+
+			// const skus = await helaPay.requestAllSkuList()
+			// console.log(skus)
+
+			const paidResult = await uni.request({
+				url: `/order/${orderId}/package_options`,
+				method: 'GET'
+			});
+
+			uni.hideLoading();
+
+			const packages = paidResult.data.options.map((item) => {
+				return {
+					...item,
+					lastPrice: Number(item.discountedPrice) - Number(paidResult.data.paidAmount)
+				};
+			});
+
+			this.packages = packages;
+			this.paidAmount = paidResult.data.paidAmount;
+			this.selectedPackage = packages[0];
+		},
+		handleSelect(pack) {
+			this.selectedPackage = pack;
+		},
+		async handleWXPay() {
+			const sku = SkuList.find((item) => {
+				return item.paidAmount === this.paidAmount && item.price === this.selectedPackage.lastPrice;
+			});
+			console.log(sku);
+			if (sku) {
+				// PC端扫码支付
+				// const payScan = await helaPay.requestPayScan(skuId)
+				// 开始轮训结果？
+
+				// 拉起支付
+				mobileWxPay(sku.id);
+			}
+		}
+	}
+};
+>>>>>>> 51f9038 (Drop helapay add qingnangAPI)
 </script>
 
 <style lang="scss" scoped>
@@ -202,6 +268,12 @@ export default {
 	background-image: -webkit-linear-gradient(90deg, rgb(252, 234, 172) 0%, rgb(254, 245, 210) 100%);
 	background-image: -ms-linear-gradient(90deg, rgb(252, 234, 172) 0%, rgb(254, 245, 210) 100%);
 	background-color: rgb(254, 245, 210);
+<<<<<<< HEAD
+=======
+	// background:-moz-linear-gradient( 90deg, rgb(252,234,172) 0%, rgb(254,245,210) 100%);/*Mozilla*/
+	// background:-webkit-linear-gradient(90deg, rgb(252,234,172) 0%, rgb(254,245,210) 100%);/*new gradient for Webkit*/
+	// background:-o-linear-gradient( 90deg, rgb(252,234,172) 0%, rgb(254,245,210) 100%);/*Opera11*/
+>>>>>>> 51f9038 (Drop helapay add qingnangAPI)
 
 	border-color: #e4c29f;
 }

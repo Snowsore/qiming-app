@@ -13,10 +13,14 @@
 import { ref } from 'vue';
 import FtHomepageLabel from '../../components/ft/FtHomepageLabel.vue';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import qingnangAPI from '../../utils/qingnangAPI.js';
 =======
 import { apiFortune } from '../../api/qingnang.js';
 >>>>>>> 80f0f7a (Add helapay)
+=======
+import qingnangAPI from '../../utils/qingnangAPI.js';
+>>>>>>> 51f9038 (Drop helapay add qingnangAPI)
 
 const fullName = ref('');
 const gender = ref('Male');
@@ -26,16 +30,21 @@ const knowsExactTime = ref('');
 const handleSubmit = async () => {
 	try {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		const res = await qingnangAPI.createFortuneOrder({
 =======
 		const res = await apiFortune.createOrder({
 >>>>>>> 80f0f7a (Add helapay)
+=======
+		const res = await qingnangAPI.createFortuneOrder({
+>>>>>>> 51f9038 (Drop helapay add qingnangAPI)
 			fullName: fullName.value,
 			gender: gender.value,
 			birthdate: birthdate.value,
 			knowsExactTime: false
 		});
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		const { orderId } = res;
 
@@ -46,12 +55,19 @@ const handleSubmit = async () => {
 		alert('订单错误');
 =======
 		const { id } = res;
+=======
+		const { orderId } = res;
+>>>>>>> 51f9038 (Drop helapay add qingnangAPI)
 
 		uni.navigateTo({
-			url: `/pages/fortune/fortune-payment?orderId=${id}`
+			url: `/pages/fortune/fortune-payment?orderId=${orderId}`
 		});
 	} catch (err) {
+<<<<<<< HEAD
 >>>>>>> 80f0f7a (Add helapay)
+=======
+		alert('订单错误');
+>>>>>>> 51f9038 (Drop helapay add qingnangAPI)
 		console.log(err);
 	}
 };
