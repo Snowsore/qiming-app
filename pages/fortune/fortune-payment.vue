@@ -2,10 +2,10 @@
 	<FtBackground>
 		<FtScroll>
 			<view>
-				<p style="font-size: 30rpx; line-height: 48rpx">熊小姐 女</p>
+				<p style="font-size: 30rpx; line-height: 48rpx">{{ fullName }} {{ gender }}</p>
 				<view style="font-size: 24rpx; line-height: 36rpx">
-					<p>公(阳)历 1995年7月1日 5时</p>
-					<p>八字：乙亥 壬午 癸已 乙卯</p>
+					<p>{{ formatBirthdate }}</p>
+					<p>八字：{{ bazi }}</p>
 					<p>特点：草泽东方之次 辰逢壬戌癸亥即龙归大海格</p>
 				</view>
 			</view>
@@ -17,11 +17,9 @@
 					<image src="../../static/ft-master.png" style="width: 238rpx; height: 238rpx" />
 				</view>
 				<view style="padding: 20rpx 4rpx">
-					<p style="font-size: 30rpx; line-height: 48rpx">熊小姐 女</p>
+					<p style="font-size: 30rpx; line-height: 48rpx">算命老师</p>
 					<view style="font-size: 24rpx; line-height: 36rpx">
-						<p>公(阳)历 1995年7月1日 5时</p>
-						<p>八字：乙亥 壬午 癸已 乙卯</p>
-						<p>特点：草泽东方之次 辰逢壬戌癸亥即龙归大海格</p>
+						<p>资深算命大师</p>
 					</view>
 				</view>
 			</view>
@@ -34,12 +32,12 @@
 			<FtPaymentSelect v-model="method" />
 			<FtButton @click="handlePay">立即解锁内容</FtButton>
 		</FtPaymentSub>
-		<FtPaymentConfirmPopup ref="confirmPopup" @continue="handleContinue" @complete="handleComplete" />
+		<FtPaymentConfirmPopup ref="confirmPopup" @continue="jumpToPaymentPage" @complete="checkPackageState" />
 	</FtBackground>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watchEffect, computed } from 'vue';
 
 import FtBackground from '../../components/ft/FtBackground.vue';
 import FtScroll from '../../components/ft/FtScroll.vue';
@@ -51,22 +49,80 @@ import FtTimer from '../../components/ft/FtTimer.vue';
 import FtButton from '../../components/ft/FtButton.vue';
 import FtPaymentConfirmPopup from '../../components/ft/FtPaymentConfirmPopup.vue';
 
-const confirmPopup = ref(null);
+import qingnangAPI from '../../utils/qingnangAPI.js';
+import calendarConverter from '../../utils/calendarConverter.js';
 
-const handleContinue = () => {
-	console.log('con');
+const props = defineProps(['orderId']);
+const confirmPopup = ref(null);
+const fullName = ref('');
+const gender = ref('');
+const birthdate = ref('');
+const bazi = ref('');
+
+const method = ref('wechat');
+
+const paymentUrl = ref('');
+
+const formatBirthdate = computed(() => {
+	const calendar = calendarConverter.create(new Date(birthdate.value));
+	return calendar.solarString;
+});
+
+const updateData = async () => {
+	const { data, info } = await qingnangAPI.getFortuneService({ orderId: props.orderId });
+
+	fullName.value = info.fullName;
+	gender.value = info.gender == 'Male' ? '男' : '女';
+	birthdate.value = info.birthdate;
+	bazi.value = data.info1.bazi;
 };
 
-const handleComplete = () => {
+const createPaymentUrl = async () => {
+	const packageOption = await qingnangAPI.getPackageOptions({
+		orderId: props.orderId
+	});
+
+	const upgradePackageOption = packageOption.includedIn[0];
+
+	const payment = await qingnangAPI.createPayment({
+		orderId: props.orderId,
+		packageId: upgradePackageOption.packageId,
+		method: 'WeChat'
+	});
+
+	paymentUrl.value = payment.h5_url;
+};
+
+const checkPackageState = async () => {
+	if (await qingnangAPI.isPaidedPackage({ orderId: props.orderId })) {
+		jumpToResultPage();
+	}
+};
+
+const jumpToPaymentPage = () => {
+	window.location.href = paymentUrl.value;
+};
+
+const handlePay = async () => {
+	confirmPopup.value.open();
+
+	if (paymentUrl.value) jumpToPaymentPage();
+};
+
+const jumpToResultPage = () => {
 	uni.navigateTo({
-		url: `/pages/fortune/fortune-result`
+		url: `/pages/fortune/fortune-result?orderId=${props.orderId}`
 	});
 };
 
-const method = ref('wechat');
-const handlePay = () => {
-	confirmPopup.value.open();
-};
+watchEffect(async () => {
+	if (await qingnangAPI.isPaidedPackage({ orderId: props.orderId })) {
+		return jumpToResultPage();
+	}
+
+	await updateData();
+	await createPaymentUrl();
+});
 </script>
 
 <style></style>

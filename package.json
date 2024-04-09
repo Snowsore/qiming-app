@@ -1,9 +1,10 @@
 {
 	"scripts": {
-	  "hela-pay": "npm update hela-pay" 
+		"hela-pay": "npm update hela-pay"
 	},
-  "dependencies": {
-    "dayjs": "^1.11.10",
-	"hela-pay": "file:hela-pay-2.0.3.tar.gz"
-  }
+	"dependencies": {
+		"dayjs": "^1.11.10",
+		"hela-pay": "file:hela-pay-2.0.3.tar.gz",
+		"js-calendar-converter": "^0.0.6"
+	}
 }
