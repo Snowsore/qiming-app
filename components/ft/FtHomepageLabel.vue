@@ -13,17 +13,17 @@
 			<template v-if="props.type == 'gender'">
 				<radio-group @change="(e) => emit('update:modelValue', e.detail.value)">
 					<label class="radio">
-						<radio value="男" :checked="props.modelValue == '男'" />
+						<radio value="Male" :checked="props.modelValue == 'Male'" />
 						男
 					</label>
 					<label class="radio">
-						<radio value="女" :checked="props.modelValue == '女'" />
+						<radio value="Female" :checked="props.modelValue == 'Female'" />
 						女
 					</label>
 				</radio-group>
 			</template>
 			<template v-if="props.type == 'birthdate'">
-				<qm-datepicker :value="props.modelValue" @update:value="(v) => emit('update:modelValue', v)"></qm-datepicker>
+				<qm-datepicker :date="props.modelValue" @update:date="(v) => emit('update:modelValue', v)" />
 			</template>
 		</view>
 	</view>
@@ -45,6 +45,8 @@ const emit = defineEmits(['update:modelValue']);
 	align-items: center;
 
 	background-color: #fbce86;
+
+	font-size: 24rpx;
 
 	padding: 0 35rpx;
 	box-sizing: border-box;

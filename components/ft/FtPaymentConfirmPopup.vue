@@ -28,6 +28,10 @@ const open = () => {
 	dialog.value.open();
 };
 
+const close = () => {
+	dialog.value.close();
+};
+
 const handleClose = () => {
 	dialog.value.close();
 };
@@ -43,13 +47,14 @@ const handleComplete = () => {
 const emit = defineEmits(['continue', 'complete']);
 
 defineExpose({
-	open
+	open,
+	close
 });
 </script>
 
 <style>
 .ft-payment-confirm-popup {
-	width: 650rpx;
+	width: 680rpx;
 	height: 400rpx;
 	background-color: white;
 	border-radius: 10rpx;
