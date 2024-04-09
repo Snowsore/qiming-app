@@ -1,5 +1,5 @@
 import App from './App'
-import { helaPay, PKG, TOKEN, APP_VERSION } from './api/constant.js'
+import { helaPay, PKG, TOKEN, APP_VERSION } from './hela_api/constant.js'
 
 try {
   const ua = window.navigator.userAgent.toLowerCase()

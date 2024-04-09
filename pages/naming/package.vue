@@ -3,7 +3,7 @@
 		<image class="banner" mode="widthFix" src="../../static/banner2.png"></image>
 		
 		<view class="packages">
-			<view @click="handleSelect(item)" v-for="(item, index) in packages" :class="['package', selectedPackage && selectedPackage.id === item.id? 'selected' : 'unselected']">
+			<view @click="handleSelect(item)" v-for="(item, index) in packages" :class="['package', selectedPackage && selectedPackage.packageId === item.packageId? 'selected' : 'unselected']">
 				<view>
 					<view class="price">
 						<view class="discount">特惠价：{{ item.discountedPrice }}元</view>
@@ -42,11 +42,13 @@
 <script>
 import { SkuList } from '../../constants.js';
 import { mobileWxPay } from '../../pay.js';
-import { helaPay } from '../../api/constant.js'
+import { helaPay } from '../../hela_api/constant.js'
+
 	
 	export default {
 		data() {
 			return {
+				orderId: null,
 				paidAmount: 0,
 				packages: [],
 				selectedPackage: null,
@@ -54,6 +56,7 @@ import { helaPay } from '../../api/constant.js'
 		},
 		onLoad(option) {
 			this.fetchPackages(option.orderId)
+			this.orderId = option.orderId
 		},
 		methods: {
 			async fetchPackages(orderId) {
@@ -66,16 +69,16 @@ import { helaPay } from '../../api/constant.js'
 			
 				
 				const paidResult = await uni.request({
-					url: `/order/${orderId}/package_options`,
+					url: `/api/package_options/${orderId}`,
 					method: 'GET'
 				})
 				
 				uni.hideLoading()
 
-				const packages = paidResult.data.options.map(item => {
+				const packages = paidResult.data.includedIn.map(item => {
 					return {
 						...item,
-						lastPrice: Number(item.discountedPrice) - Number(paidResult.data.paidAmount)
+						lastPrice: Number(item.discountedPrice) - (Number(paidResult.data.paidAmount) || 0)
 					}
 				})
 				
@@ -88,19 +91,28 @@ import { helaPay } from '../../api/constant.js'
 				this.selectedPackage = pack
 			},
 			async handleWXPay() {
-				const sku = SkuList.find(item => {
-					return item.paidAmount === this.paidAmount && item.price === this.selectedPackage.lastPrice
+				// const sku = SkuList.find(item => {
+				// 	return item.paidAmount === this.paidAmount && item.price === this.selectedPackage.lastPrice
+				// })
+				// console.log(sku)
+				uni.showLoading({})
+				
+				const result = await uni.request({
+					url: '/api/payment/wechat_h5',
+					method: 'POST',
+					data: {
+						orderId: this.orderId,
+						packageId: this.selectedPackage.packageId,
+						method: "WeChat"
+					}
 				})
-				console.log(sku)
-				if (sku) {
-					// PC端扫码支付
-					// const payScan = await helaPay.requestPayScan(skuId)
-					// 开始轮训结果？
-					
-					// 拉起支付
-					mobileWxPay(sku.id)
-					
+				
+				uni.hideLoading()
+				
+				if (result.data && result.data.h5_url) {
+					window.location.href = result.data.h5_url
 				}
+				
 			},
 		},
 	}

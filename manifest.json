@@ -70,8 +70,8 @@
             "port" : 8081, //端口号  
             "disableHostCheck" : true,
             "proxy" : {
-                "/order" : {
-                    "target" : "http://123.249.42.158:3000/", //目标接口域名  
+                "/api" : {
+                    "target" : "https://ningmenglaice.com/", //目标接口域名  
                     "changeOrigin" : true, //是否跨域  
                     "secure" : false
                 }

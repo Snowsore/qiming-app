@@ -116,10 +116,10 @@ export default {
 			
 			setTimeout(async () => {
 				const result = await uni.request({
-					url: `/order/${orderId}/service_preview`,
+					url: `/api/service/${orderId}`,
 					method: 'GET'
 				})
-				this.data = result.data
+				this.data = result.data.data[0]
 				uni.hideLoading()
 			}, 1000)
 			

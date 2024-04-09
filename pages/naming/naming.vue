@@ -149,7 +149,7 @@ export default {
 				mask: true
 			});
 			const result = await uni.request({
-				url: '/order/naming_service',
+				url: '/api/order/naming_service',
 				method: 'POST',
 				data: {
 					lastName: this.lastName,
@@ -169,7 +169,7 @@ export default {
 			uni.hideLoading();
 			console.log(result);
 			uni.navigateTo({
-				url: `/pages/naming/preview?orderId=${result.data.id}`
+				url: `/pages/naming/preview?orderId=${result.data.orderId}`
 			});
 		}
 	}

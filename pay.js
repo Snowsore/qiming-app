@@ -1,6 +1,6 @@
 
 import { appendUrlParams } from './utils.js'
-import { helaPay } from './api/constant.js'
+import { helaPay } from './hela_api/constant.js'
 
 const mobileWxPay = (skuId, returnUrl) => {
 	helaPay
