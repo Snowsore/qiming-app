@@ -37,6 +37,8 @@
 			<image mode="widthFix" src="../../static/notice.png"></image>
 			<view>支付系统经过安全联盟和可信网站认证，请放心使用</view>
 		</view>
+		
+		<FtPaymentConfirmPopup ref="confirmPopup" @continue="jumpToPaymentPage" @complete="checkPayState" />
 	</view>
 </template>
 
@@ -44,6 +46,9 @@
 import { SkuList } from '../../constants.js';
 import { mobileWxPay } from '../../pay.js';
 import { helaPay } from '../../hela_api/constant.js'
+import FtPaymentConfirmPopup from '../../components/ft/FtPaymentConfirmPopup.vue';
+import qingnangAPI from '../../utils/qingnangAPI.js';
+
 export default {
 	data() {
 		return {
@@ -51,11 +56,24 @@ export default {
 			paidAmount: 0,
 			packages: [],
 			selectedPackage: null,
+			
+			// showPayHint: false // 展示支付提示窗
 		};
+	},
+	components: {
+		FtPaymentConfirmPopup
 	},
 	onLoad(option) {
 		this.fetchPackages(option.orderId)
 		this.orderId = option.orderId
+		
+	},
+	mounted() {
+		const isPaying = uni.getStorageSync('isPaying')
+		
+		if (isPaying && isPaying === this.orderId) {
+			this.$refs.confirmPopup.open()
+		}
 	},
 	methods: {
 		async fetchPackages(orderId) {
@@ -63,27 +81,38 @@ export default {
 				mask: true
 			})
 			
-			const paidResult = await uni.request({
-				url: `/api/package_options/${orderId}`,
-				method: 'GET'
+			const paidResult = await qingnangAPI.getPackageOptions({
+				orderId
 			})
 			
 			uni.hideLoading()
 
-			const packages = paidResult.data.includedIn.map(item => {
+			const packages = paidResult.includedIn.map(item => {
 				return {
 					...item,
-					lastPrice: Number(item.discountedPrice) - (Number(paidResult.data.paidAmount) || 0)
+					lastPrice: Number(item.discountedPrice) - (Number(paidResult.paidAmount) || 0)
 				}
 			})
 			
 			this.packages = packages
-			this.paidAmount = paidResult.data.paidAmount
+			this.paidAmount = paidResult.paidAmount || 0
 			this.selectedPackage = packages[0]
 			
 		},
 		handleSelect(pack) {
 			this.selectedPackage = pack
+		},
+		jumpToPaymentPage(){
+			const payLink = uni.getStorageSync('payLink')
+			window.location.href = payLink
+		},
+		async checkPayState() {
+			const result = await qingnangAPI.checkOrderPayment({ orderId: this.orderId })
+			if (result.payment.status === 'Completed') {
+				uni.navigateTo({
+					url: `/pages/naming/result?orderId=${this.orderId}`
+				});
+			}
 		},
 		async handleWXPay() {
 			
@@ -91,20 +120,21 @@ export default {
 				mask: true
 			})
 			
-			const result = await uni.request({
-				url: '/api/payment/wechat_h5',
-				method: 'POST',
-				data: {
-					orderId: this.orderId,
-					packageId: this.selectedPackage.packageId,
-					method: "WeChat"
-				}
+			const result = await qingnangAPI.createPayment({
+				orderId: this.orderId,
+				packageId: this.selectedPackage.packageId,
+				method: "WeChat"
 			})
+			
+			const payLink = result.h5_url + `&redirect_url=${encodeURIComponent(window.location.href)}`
+			
+			uni.setStorageSync('isPaying', this.orderId)
+			uni.setStorageSync('payLink', payLink)
 			
 			uni.hideLoading()
 			
-			if (result.data && result.data.h5_url) {
-				window.location.href = result.data.h5_url
+			if (result && result.h5_url) {
+				window.location.href = payLink
 			}
 			
 		},
@@ -172,9 +202,6 @@ export default {
 	background-image: -webkit-linear-gradient(90deg, rgb(252, 234, 172) 0%, rgb(254, 245, 210) 100%);
 	background-image: -ms-linear-gradient(90deg, rgb(252, 234, 172) 0%, rgb(254, 245, 210) 100%);
 	background-color: rgb(254, 245, 210);
-	// background:-moz-linear-gradient( 90deg, rgb(252,234,172) 0%, rgb(254,245,210) 100%);/*Mozilla*/
-	// background:-webkit-linear-gradient(90deg, rgb(252,234,172) 0%, rgb(254,245,210) 100%);/*new gradient for Webkit*/
-	// background:-o-linear-gradient( 90deg, rgb(252,234,172) 0%, rgb(254,245,210) 100%);/*Opera11*/
 
 	border-color: #e4c29f;
 }

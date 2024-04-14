@@ -75,6 +75,15 @@ const isPaidedPackage = async ({ orderId }) => {
 	return !packageOption.function.endsWith('0');
 };
 
+const linkUser = async (data) => {
+	const res = await request({
+		url: `/api/user/link`,
+		method: 'POST',
+		data
+	});
+	return res.data;
+};
+
 export default {
 	createFortuneOrder,
 	getOrder,
@@ -83,5 +92,6 @@ export default {
 	createPayment,
 	getPackageOptions,
 	checkOrderPayment,
-	isPaidedPackage
+	isPaidedPackage,
+	linkUser
 };

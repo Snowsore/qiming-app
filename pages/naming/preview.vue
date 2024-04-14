@@ -69,6 +69,7 @@ import qmDatepicker from '@/components/qm-datepicker/qm-datepicker.vue';
 import qmAd from '../../components/qm-ad/qm-ad.vue';
 
 import { GenderType } from '../../constants.js';
+import qingnangAPI from '../../utils/qingnangAPI';
 
 export default {
 	data() {
@@ -112,17 +113,11 @@ export default {
 			})
 			this.namingSubmit = storage.data
 			
-			console.log(this.namingSubmit)
-			
 			setTimeout(async () => {
-				const result = await uni.request({
-					url: `/api/service/${orderId}`,
-					method: 'GET'
-				})
-				this.data = result.data.data[0]
+				const result = await qingnangAPI.getNamingService({ orderId })
+				this.data = result.data[0]
 				uni.hideLoading()
 			}, 1000)
-			
 			
 		},
 		jumpPackage() {
