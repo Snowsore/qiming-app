@@ -25,6 +25,12 @@
 			}
 		},
 		{
+			"path": "pages/naming/naming-result",
+			"style": {
+				"navigationBarTitleText": "AI智能取名"
+			}
+		},
+		{
 			"path": "pages/fortune/fortune",
 			"style": {
 				"navigationBarTitleText": "AI智能算命"
