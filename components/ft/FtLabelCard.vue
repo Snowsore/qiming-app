@@ -43,6 +43,7 @@ const titleStyle = `color: ${props.color}`;
 }
 
 .ft-label-card-title {
+	white-space: nowrap;
 	font-size: 36rpx;
 }
 

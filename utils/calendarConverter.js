@@ -9,7 +9,11 @@ const getChineseZodiacHour = (hour) => {
 };
 
 const create = (date) => {
-	const dl = calendarConverter.solar2lunar(date);
+	const year = date.getFullYear();
+	const month = date.getMonth() + 1;
+	const day = date.getDate();
+	const dl = calendarConverter.solar2lunar(year, month, day);
+
 	return {
 		calendarConverter: dl,
 		solarString: `公(阳)历 ${dl.cYear}年${dl.cMonth}月${dl.cDay}日 ${date.getHours()}时`,

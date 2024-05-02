@@ -15,8 +15,11 @@
 </template>
 
 <script setup>
-const innerText = '甲己-中正土  乙庚-仁义金  丙辛-威制水  丁壬-淫慝木  戊癸-无情火';
-const outerText = '三会    亥子丑:水   寅卯辰:木   巳午未:火   申酉戌:金';
+import { computed } from 'vue';
+const props = defineProps(['data']);
+
+const innerText = computed(() => props.data.info2.text[0]);
+const outerText = computed(() => props.data.info2.text[1].replaceAll(': ', ':').replaceAll(' ', '   '));
 
 const rotate = (i) => {
 	return `transform: rotate(${9 * i}deg)`;

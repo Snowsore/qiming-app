@@ -3,37 +3,33 @@
 		<FtScroll>
 			<view style="font-size: 30rpx; line-height: 48rpx">
 				<view>您的姓名：{{ info.fullName }}</view>
-				<view>您的性别：男</view>
+				<view>您的性别：{{ infoGender }}</view>
 				<view>出生日期：{{ calendar.solarString }}</view>
 				<view>{{ calendar.lunarString }}</view>
 			</view>
 		</FtScroll>
 		<view style="margin: 15rpx">
-			<FtLabelCard title="八字" color="#e6550e">乙亥 壬午 癸巳 乙卯</FtLabelCard>
-			<FtLabelCard title="特点" color="#24933e">草泽 东方之次 辰逢壬戍癸亥即</FtLabelCard>
+			<FtLabelCard title="八字" color="#e6550e">{{ data.info1.bazi }}</FtLabelCard>
+			<FtLabelCard title="特点" color="#24933e">{{ data.info12.content.特点 }}</FtLabelCard>
 			<FtLabelCard title="解析" color="#1e4fde">禄分析: ('壬', '子') 正羊刃禄凶</FtLabelCard>
 			<FtLabelCard title="文星贵人" color="#c2199c">癸 卯 天印贵人: 此号天印贵</FtLabelCard>
 		</view>
 		<FtInfoCard title="你的八字命盘解读">
 			<view style="display: grid; gap: 10rpx; margin-bottom: 30rpx">
 				<view style="text-align: center; font-size: 24rpx">您的八字命盘</view>
-				<view style="font-size: 22rpx">甲己-中正土 乙庚-仁义金 丙辛-威制水 丁壬-淫慝木 戊癸-无</view>
-				<view style="font-size: 22rpx">三会: 亥子丑: 水, 寅卯辰: 木, 巳午未: 火, 申酉戌: 金</view>
+				<view style="font-size: 22rpx">{{ data.info2.text[0] }}</view>
+				<view style="font-size: 22rpx">{{ data.info2.text[1] }}</view>
 			</view>
-			<FtFortuneCircle />
+			<FtFortuneCircle :data="data" />
 		</FtInfoCard>
 		<FtInfoCard title="墓库">
-			甲 丙 癸 壬 伤 财 -- 劫 申子辰:水 寅 巳酉丑:金 亥 寅午戌:火 申 亥卯未:木 巳 辰 寅 卯 子 官 伤 食 比 生寅申巳亥 败子午卯酉 库辰戌丑未 子丑土 寅亥木 卯戌火 酉辰金 申巳水
-			未午土
+			{{ data.info2.text[0] }},
+			{{ data.info2.text[1] }}
 			<view style="display: grid; padding: 20rpx; grid-template-columns: 1fr 1fr 1fr 1fr; place-content: center; gap: 20rpx">
-				<FtCircleIcon>水</FtCircleIcon>
-				<FtCircleIcon>戍</FtCircleIcon>
-				<FtCircleIcon>未</FtCircleIcon>
-				<FtCircleIcon>水</FtCircleIcon>
-				<FtCircleIcon>水</FtCircleIcon>
-				<FtCircleIcon>火土</FtCircleIcon>
-				<FtCircleIcon>未</FtCircleIcon>
-				<FtCircleIcon>水</FtCircleIcon>
+				<FtCircleIcon>{{ data.info2.content.丑 }}</FtCircleIcon>
+				<FtCircleIcon>{{ data.info2.content.戌 }}</FtCircleIcon>
+				<FtCircleIcon>{{ data.info2.content.未 }}</FtCircleIcon>
+				<FtCircleIcon>{{ data.info2.content.辰 }}</FtCircleIcon>
 			</view>
 			<view style="font-size: 22rpx; line-height: 36rpx">
 				1.调候 1辛2_丙 金不换大运 调候喜辛丙 忌庚 大运喜巳午未 忌申 (夭) 备注忌官杀混 2.金不换大运说明 丑寅午戌亥有损寿运子丑辰巳午未亥调候待改进 3.格局选用 食伤生财
@@ -42,16 +38,16 @@
 			</view>
 		</FtInfoCard>
 		<FtInfoCard title="六亲">
-			<FtLabelCard title="丁" color="#e6550e">才 父亲-哀 死 病 绝</FtLabelCard>
-			<FtLabelCard title="丙" color="#e6550e">财 妻子-冠 长 沐 胎</FtLabelCard>
-			<FtLabelCard title="乙" color="#e6550e">食 下属-冠 帝 建 病</FtLabelCard>
-			<FtLabelCard title="壬" color="#e6550e">劫 姐妹-墓 病 死 帝</FtLabelCard>
-			<FtLabelCard title="己" color="#e6550e">杀 儿子-衰 死 病 绝</FtLabelCard>
-			<FtLabelCard title="庚" color="#e6550e">印 母亲-养 绝 胎 死</FtLabelCard>
-			<FtLabelCard title="戊" color="#e6550e">官 女儿-冠 长 沐 胎</FtLabelCard>
-			<FtLabelCard title="甲" color="#e6550e">伤 孙女-衰 建 帝 沐</FtLabelCard>
-			<FtLabelCard title="癸" color="#e6550e">比 兄弟-养 沐 长 建</FtLabelCard>
-			<FtLabelCard title="辛" color="#e6550e">枭 祖父-墓 胎 绝 长</FtLabelCard>
+			<FtLabelCard title="丁" color="#e6550e">{{ data.info6.content.丁 }}</FtLabelCard>
+			<FtLabelCard title="丙" color="#e6550e">{{ data.info6.content.丙 }}</FtLabelCard>
+			<FtLabelCard title="乙" color="#e6550e">{{ data.info6.content.乙 }}</FtLabelCard>
+			<FtLabelCard title="壬" color="#e6550e">{{ data.info6.content.壬 }}</FtLabelCard>
+			<FtLabelCard title="己" color="#e6550e">{{ data.info6.content.己 }}</FtLabelCard>
+			<FtLabelCard title="庚" color="#e6550e">{{ data.info6.content.庚 }}</FtLabelCard>
+			<FtLabelCard title="戊" color="#e6550e">{{ data.info6.content.戊 }}</FtLabelCard>
+			<FtLabelCard title="甲" color="#e6550e">{{ data.info6.content.甲 }}</FtLabelCard>
+			<FtLabelCard title="癸" color="#e6550e">{{ data.info6.content.癸 }}</FtLabelCard>
+			<FtLabelCard title="辛" color="#e6550e">{{ data.info6.content.辛 }}</FtLabelCard>
 			<view style="font-size: 22rpx; line-height: 36rpx">
 				1.时支比子女为人公正倔强行动力强能得资产 时柱比与亲人意见不 合 比劫大于2男感情阻碍事业起伏不定 时禄伤官格晚年吉 母法总则 2.P56-26 己未 丙寅 乙丑 己卯
 				3.劫财扶助无微不至劫财多者谦虚之中带有傲气凡事先理情而后情 理先细节后全局性 4.刚强精明干练女命不适合干透支藏 务实不喜欢抽象性的空谈不容
@@ -72,36 +68,6 @@
 			支的其他特点（如生克制化、五行方位等）相结合，以提供对个人 命运的全面分析。 4.纳音五行的分类：六十个甲子中的每两组甲子合成一个纳音，共
 			计三十个纳音五行。这些纳音都是五行的变体，每个纳音五行都有 自己独特的强弱和属性。
 		</FtInfoText>
-
-		<FtInfoCard title="info1">
-			<view style="font-size: 22rpx; line-height: 36rpx">
-				{{ data.info1 }}
-			</view>
-		</FtInfoCard>
-
-		<FtInfoCard title="info2">
-			<view style="font-size: 22rpx; line-height: 36rpx">
-				{{ data.info2 }}
-			</view>
-		</FtInfoCard>
-
-		<FtInfoCard title="info3">
-			<view style="font-size: 22rpx; line-height: 36rpx">
-				{{ data.info3 }}
-			</view>
-		</FtInfoCard>
-
-		<FtInfoCard title="info4">
-			<view style="font-size: 22rpx; line-height: 36rpx">
-				{{ data.info4 }}
-			</view>
-		</FtInfoCard>
-
-		<FtInfoCard title="info5">
-			<view style="font-size: 22rpx; line-height: 36rpx">
-				{{ data.info5 }}
-			</view>
-		</FtInfoCard>
 
 		<FtInfoText title="读取报告须知：">
 			为了给您提供高效、有针对性的服务，请注意以下问题: 1.对报告内容不明白或想深入了解，请在当前页面顶部/底部添加 老师微信; 2.如有订单问题，请及时联系客服
@@ -139,17 +105,41 @@ const info = reactive({
 
 const data = reactive({
 	info1: '',
-	info2: '',
+	info2: { text: ['', ''], content: { 丑: '', 戌: '', 未: '', 辰: '' } },
 	info3: '',
 	info4: '',
 	info5: '',
-	info6: '',
+	info6: {
+		content: {
+			丁: '',
+			丙: '',
+			乙: '',
+			壬: '',
+			己: '',
+			庚: '',
+			戊: '',
+			甲: '',
+			癸: '',
+			辛: ''
+		}
+	},
 	info7: '',
 	info8: '',
 	info9: '',
 	info10: '',
 	info11: '',
-	info12: ''
+	info12: {
+		content: { 特点: '' }
+	}
+});
+
+const infoGender = computed(() => {
+	return info.gender == 'Male' ? '男' : '女';
+});
+
+const formatBirthdate = computed(() => {
+	const calendar = calendarConverter.create(new Date(info.value));
+	return calendar;
 });
 
 watchEffect(async () => {
@@ -162,6 +152,7 @@ watchEffect(async () => {
 	const service = await qingnangAPI.getFortuneService({ orderId: props.orderId });
 	Object.assign(info, service.info);
 	Object.assign(data, service.data);
+	data.info2.text = service.data.info2.text;
 });
 </script>
 
