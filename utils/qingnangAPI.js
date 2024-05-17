@@ -1,5 +1,9 @@
 import { appendUrlParams } from '../utils.js';
 
+const isWechatBrowser = () => {
+	return typeof WeixinJSBridge != 'undefined';
+};
+
 const request = async (config) => {
 	const res = await uni.request(config);
 
@@ -39,15 +43,73 @@ const getNamingService = async ({ orderId }) => {
 	});
 	return res.data;
 };
+const getWechatCode = () => {
+	const appId = 'wxb9484568f66dd447';
+	const redirectUri = encodeURIComponent(window.location.href);
+	const wechatAuthUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=${redirectUri}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`;
 
-const createPayment = async (data) => {
+	window.location.href = wechatAuthUrl;
+};
+
+const getOpenid = async (code) => {
 	const res = await request({
-		url: `/api/payment/wechat_h5`,
-		method: 'POST',
-		data
+		url: `/api/wechat/jsapi_code?code=${code}`,
+		method: 'GET'
 	});
 
-	return res.data;
+	return res.data.openid;
+};
+
+const createPayment = async (data) => {
+	if (isWechatBrowser()) {
+		const urlParams = new URLSearchParams(window.location.search);
+		const code = urlParams.get('code');
+
+		if (!code) {
+			getWechatCode();
+			return;
+		}
+
+		const openid = await getOpenid(code);
+
+		const res = await request({
+			url: `/api/payment/wechat_jsapi`,
+			method: 'POST',
+			data: {
+				...data,
+				openid
+			}
+		});
+
+		const { appId, timeStamp, nonceStr, package: pkg, signType, paySign } = res.data;
+
+		WeixinJSBridge.invoke(
+			'getBrandWCPayRequest',
+			{
+				appId,
+				timeStamp,
+				nonceStr,
+				package: pkg,
+				signType,
+				paySign
+			},
+			function (response) {
+				if (response.err_msg === 'get_brand_wcpay_request:ok') {
+					console.log('Payment success');
+				} else {
+					console.log('Payment failed:', response.err_msg);
+				}
+			}
+		);
+	} else {
+		const res = await request({
+			url: `/api/payment/wechat_h5`,
+			method: 'POST',
+			data
+		});
+
+		return res.data;
+	}
 };
 
 const getPackageOptions = async ({ orderId }) => {
@@ -85,6 +147,7 @@ const linkUser = async (data) => {
 };
 
 export default {
+	isWechatBrowser,
 	createFortuneOrder,
 	getOrder,
 	getFortuneService,
