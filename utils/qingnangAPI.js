@@ -1,16 +1,5 @@
-import { appendUrlParams } from '../utils.js';
-
-const isWechatBrowser = () => {
-	return typeof WeixinJSBridge != 'undefined';
-};
-
-const request = async (config) => {
-	const res = await uni.request(config);
-
-	if (res.statusCode >= 400) throw res;
-
-	return res;
-};
+import request from './request.js';
+import wechatLogin from './wechatLogin.js';
 
 const createFortuneOrder = async (data) => {
 	const res = await request({
@@ -43,41 +32,31 @@ const getNamingService = async ({ orderId }) => {
 	});
 	return res.data;
 };
-const getWechatCode = () => {
-	const appId = 'wxb9484568f66dd447';
-	const redirectUri = encodeURIComponent(window.location.href);
-	const wechatAuthUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=${redirectUri}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`;
 
-	window.location.href = wechatAuthUrl;
-};
+const createPayment = async ({ orderId, packageId, method, redirectUrl, success }) => {
+	const whenRequestEnd = () => {
+		try {
+			if (redirectUrl) {
+				// const paymentUrl = `&redirect_url=${encodeURIComponent(redirectUrl)}`;
 
-const getOpenid = async (code) => {
-	const res = await request({
-		url: `/api/wechat/jsapi_code?code=${code}`,
-		method: 'GET'
-	});
+				window.location.href = redirectUrl;
+			}
 
-	return res.data.openid;
-};
-
-const createPayment = async (data) => {
-	if (isWechatBrowser()) {
-		const urlParams = new URLSearchParams(window.location.search);
-		const code = urlParams.get('code');
-
-		if (!code) {
-			getWechatCode();
-			return;
+			if (success) success();
+		} catch (err) {
+			alert(err);
 		}
+	};
 
-		const openid = await getOpenid(code);
-
+	if (wechatLogin.isWechatBrowser()) {
 		const res = await request({
 			url: `/api/payment/wechat_jsapi`,
 			method: 'POST',
 			data: {
-				...data,
-				openid
+				orderId,
+				packageId,
+				method,
+				openid: wechatLogin.getOpenid()
 			}
 		});
 
@@ -93,11 +72,9 @@ const createPayment = async (data) => {
 				signType,
 				paySign
 			},
-			function (response) {
-				if (response.err_msg === 'get_brand_wcpay_request:ok') {
-					console.log('Payment success');
-				} else {
-					console.log('Payment failed:', response.err_msg);
+			(res) => {
+				if (res.err_msg == 'get_brand_wcpay_request:ok') {
+					whenRequestEnd();
 				}
 			}
 		);
@@ -105,10 +82,12 @@ const createPayment = async (data) => {
 		const res = await request({
 			url: `/api/payment/wechat_h5`,
 			method: 'POST',
-			data
+			orderId,
+			packageId,
+			method
 		});
 
-		return res.data;
+		whenRequestEnd();
 	}
 };
 
@@ -147,7 +126,6 @@ const linkUser = async (data) => {
 };
 
 export default {
-	isWechatBrowser,
 	createFortuneOrder,
 	getOrder,
 	getFortuneService,

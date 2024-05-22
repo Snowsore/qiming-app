@@ -61,8 +61,6 @@ const bazi = ref('');
 
 const method = ref('wechat');
 
-const paymentUrl = ref('');
-
 const formatBirthdate = computed(() => {
 	const calendar = calendarConverter.create(new Date(birthdate.value));
 	return calendar.solarString;
@@ -77,7 +75,7 @@ const updateData = async () => {
 	bazi.value = data.info1.bazi;
 };
 
-const createPaymentUrl = async () => {
+const createPayment = async () => {
 	const packageOption = await qingnangAPI.getPackageOptions({
 		orderId: props.orderId
 	});
@@ -87,10 +85,11 @@ const createPaymentUrl = async () => {
 	const payment = await qingnangAPI.createPayment({
 		orderId: props.orderId,
 		packageId: upgradePackageOption.packageId,
-		method: 'WeChat'
+		method: 'WeChat',
+		success() {
+			jumpToResultPage();
+		}
 	});
-
-	paymentUrl.value = payment.h5_url;
 };
 
 const checkPackageState = async () => {
@@ -99,17 +98,14 @@ const checkPackageState = async () => {
 	}
 };
 
-const jumpToPaymentPage = () => {
-	window.location.href = paymentUrl.value;
-};
-
 const handlePay = async () => {
 	confirmPopup.value.open();
 
-	if (paymentUrl.value) jumpToPaymentPage();
+	await createPayment();
 };
 
 const jumpToResultPage = () => {
+	confirmPopup.value.close();
 	uni.navigateTo({
 		url: `/pages/fortune/fortune-result?orderId=${props.orderId}`
 	});
@@ -121,7 +117,6 @@ watchEffect(async () => {
 	}
 
 	await updateData();
-	await createPaymentUrl();
 });
 </script>
 
