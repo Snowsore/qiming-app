@@ -32,7 +32,7 @@
 			<FtPaymentSelect v-model="method" />
 			<FtButton @click="handlePay">立即解锁内容</FtButton>
 		</FtPaymentSub>
-		<FtPaymentConfirmPopup ref="confirmPopup" @continue="jumpToPaymentPage" @complete="checkPackageState" />
+		<FtPaymentConfirmPopup ref="confirmPopup" @continue="createPayment" @complete="checkPackageState" />
 	</FtBackground>
 </template>
 
@@ -76,20 +76,24 @@ const updateData = async () => {
 };
 
 const createPayment = async () => {
-	const packageOption = await qingnangAPI.getPackageOptions({
-		orderId: props.orderId
-	});
+	try {
+		const packageOption = await qingnangAPI.getPackageOptions({
+			orderId: props.orderId
+		});
 
-	const upgradePackageOption = packageOption.includedIn[0];
+		const upgradePackageOption = packageOption.includedIn[0];
 
-	const payment = await qingnangAPI.createPayment({
-		orderId: props.orderId,
-		packageId: upgradePackageOption.packageId,
-		method: 'WeChat',
-		success() {
-			jumpToResultPage();
-		}
-	});
+		const payment = await qingnangAPI.createPayment({
+			orderId: props.orderId,
+			packageId: upgradePackageOption.packageId,
+			method: 'WeChat',
+			success() {
+				jumpToResultPage();
+			}
+		});
+	} catch (err) {
+		alert(JSON.stringify(err));
+	}
 };
 
 const checkPackageState = async () => {

@@ -34,20 +34,6 @@ const getNamingService = async ({ orderId }) => {
 };
 
 const createPayment = async ({ orderId, packageId, method, redirectUrl, success }) => {
-	const whenRequestEnd = () => {
-		try {
-			if (redirectUrl) {
-				// const paymentUrl = `&redirect_url=${encodeURIComponent(redirectUrl)}`;
-
-				window.location.href = redirectUrl;
-			}
-
-			if (success) success();
-		} catch (err) {
-			alert(err);
-		}
-	};
-
 	if (wechatLogin.isWechatBrowser()) {
 		const res = await request({
 			url: `/api/payment/wechat_jsapi`,
@@ -74,7 +60,7 @@ const createPayment = async ({ orderId, packageId, method, redirectUrl, success 
 			},
 			(res) => {
 				if (res.err_msg == 'get_brand_wcpay_request:ok') {
-					whenRequestEnd();
+					if (success) success();
 				}
 			}
 		);
@@ -82,12 +68,16 @@ const createPayment = async ({ orderId, packageId, method, redirectUrl, success 
 		const res = await request({
 			url: `/api/payment/wechat_h5`,
 			method: 'POST',
-			orderId,
-			packageId,
-			method
+			data: {
+				orderId,
+				packageId,
+				method
+			}
 		});
 
-		whenRequestEnd();
+		const reUrl = redirectUrl == undefined ? '' : `&redirect_url=${encodeURIComponent(redirectUrl)}`;
+
+		window.location.href = res.data.h5_url + reUrl;
 	}
 };
 
